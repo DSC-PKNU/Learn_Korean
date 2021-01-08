@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'KidPage.dart';
+import 'page_class/KidPage.dart';
 void main() {
   runApp(MyApp());
 }
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: KidPage(),
+      home: KidPage(), //아이계정으로 시작
     );
   }
 }
