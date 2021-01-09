@@ -1,6 +1,6 @@
 # learn_korean_for_children
 
-A new Flutter project.
+아이들을 위한 한글 교육 어플
 
 ## Getting Started
 
