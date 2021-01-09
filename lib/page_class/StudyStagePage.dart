@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:learn_korean_for_children/page_class/StudyDictation.dart';
 
 // 단어 공부 페이지
-
 class StudyStagePage extends StatefulWidget {
   @override
   _StudyStagePageState createState() => _StudyStagePageState();
@@ -27,6 +27,7 @@ class _StudyStagePageState extends State<StudyStagePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          //위에 세줄
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -36,24 +37,26 @@ class _StudyStagePageState extends State<StudyStagePage> {
               stage_button[2]
               
             ],),
+
+          //아래 세줄
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               stage_button[3],
               stage_button[4],
               stage_button[5]
-            ],)
+            ],),
         ],
       ),
       
       //TODO: 페이지 넘김 버튼 추가하기
-    
+     
     );
   }
 }
 
 List<Widget> stage_button = [
-  ReusableCard(round: 1,cardChild: Text('test'),),
+  ReusableCard(round: 1,cardChild: StudyDictation(),),
   ReusableCard(round: 2,cardChild: Text('test')),
   ReusableCard(round: 3,cardChild: Text('test')),
   ReusableCard(round: 4,cardChild: Text('test')),
