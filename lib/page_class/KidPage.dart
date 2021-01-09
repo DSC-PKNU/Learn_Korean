@@ -14,6 +14,7 @@ class KidPage_State extends State<KidPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
         children: <Widget>[
           //왼쪽 줄 : 공부 시작, 받아쓰기 연습, 맞춤법 공부
           kid_page_card[0], 
@@ -31,6 +32,7 @@ class KidPage_State extends State<KidPage> {
   }
 }
 
+//TODO: Expanded 위젯 말고 다른 위젯을 쓰는게 좋을 지도 모른다.
 List<Widget> kid_page_card= [
   //왼쪽 줄
   Expanded(child: Column(
@@ -42,7 +44,8 @@ List<Widget> kid_page_card= [
           ),
       ),
       //받아쓰기 연습
-      Expanded(child: ReusableCard(
+      Expanded(
+        child: ReusableCard(
           colour: Colors.green,
           text: "받아쓰기 연습",
           cardChild: StudyStagePage(),
@@ -120,7 +123,8 @@ class ReusableCard extends StatelessWidget {
       margin: EdgeInsets.all(30.0),
       //TODO: 이미지를 덮어씌우던가 디자인 변경하자
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
+        //image: ,
+        borderRadius: BorderRadius.circular(50.0),
         color: colour,
 
       ),
