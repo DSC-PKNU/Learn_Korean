@@ -4,8 +4,6 @@ import 'StudyStagePage.dart';
 // 첫 시작 페이지 : 아이 계정
 
 //글자가 길면 세로모드에서 깨짐 ex) 받아쓰기 연습
-
-
 class KidPage extends StatefulWidget {
   @override
   KidPage_State createState() => KidPage_State();
@@ -43,6 +41,7 @@ List<Widget> kid_page_card= [
               Expanded(child: ReusableCard(
                   colour: Colors.green,
                   text: "받아쓰기 연습",
+                  cardChild: StudyStagePage(),
                 ),
               ),
               //맞춤법 공부
@@ -88,7 +87,7 @@ class ReusableCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           //TODO: 버튼 디자인 수정, (색깔, 크기맞춤)
           FlatButton(
