@@ -33,17 +33,18 @@ class _StudyDictationState extends State<StudyDictation> {
           ),
 
           // 받아쓰는 곳
-          //TODO: 펜 인식을 할 수 있는 위젯이 무엇일까
-
+          //TODO: 그림판 만들기
+          Text('여기에 그릴 것임'),
+          
 
           //다음문제 가기 아이콘
-          // IconButton(
-          //   icon: Icon(
-          //     Icons.volume_up,
+          IconButton(
+            icon: Icon(
+              Icons.volume_up,
              //TODO: 볼륨 조절 아이콘, 위치 조정 중
-          //   ), 
-          //   onPressed: null
-          //   ),
+            ), 
+            onPressed: null
+            ),
           
           
           IconButton(
