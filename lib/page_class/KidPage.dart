@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'StudyStagePage.dart';
-
+import 'parent_page.dart';
 // 첫 시작 페이지 : 아이 계정
 
 //글자가 길면 세로모드에서 깨짐 ex) 받아쓰기 연습
@@ -23,7 +23,15 @@ class KidPage_State extends State<KidPage> {
           //TODO: 보호자 계정 전환 버튼 위치 변경
             FloatingActionButton.extended(
               label: Text('보호자\n 계정'),
-              onPressed: null,//보호자 계정 전환
+              onPressed: (){
+                Navigator.push(context, 
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return ParentPage();
+                  }
+                )
+              );
+              },//보호자 계정 전환
               backgroundColor: Colors.orange,
             )
         ],),
