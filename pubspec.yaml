@@ -50,6 +50,9 @@ flutter:
       - images/KidPage/
       - images/StudyStagePage/
       - images/ParentPage/
+      - images/StudyDictation/
+      - images/Othography/
+      - images/IncorrectProblem/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

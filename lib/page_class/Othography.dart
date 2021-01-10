@@ -1,15 +1,17 @@
+//맞춤법 심화 학습
+
 import 'package:flutter/material.dart';
 
-// 단어 문제가 음성으로 출제되고, 받아쓰는 화면
+// 맞춤법 문제가 음성으로 출제되고, 고르는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
-// TODO: 받아쓴 글자를 글자 인식 부분에 전달하기
+// TODO: 맞춤법 선택한 답을 백엔드에 전달하기
 String img_path = 'images/StudyDictation';
-class StudyDictation extends StatefulWidget {
+class Orthography extends StatefulWidget {
   @override
-  _StudyDictationState createState() => _StudyDictationState();
+  _OrthographyState createState() => _OrthographyState();
 }
 
-class _StudyDictationState extends State<StudyDictation> {
+class _OrthographyState extends State<Orthography> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,22 +31,29 @@ class _StudyDictationState extends State<StudyDictation> {
                 // TODO: 문제가 없으면 버튼을 숨긴다.
                 PassProblem[0],
 
-                // 받아쓰는 곳
-                //TODO: 그림판 만들기
-                Text('받아쓰기받아쓰기'),
-                
+                //TODO: 맞춤법 양자택일 문제 출제
+                Column(
+                  children: [
+                    //그림
+                    Text('\n\n문제 출제 그림\n\n\n\n'),
+                    Row(
+                      children: [
+                        SelectAns[0],
+                        SizedBox(width:100),
+                        SelectAns[1]
+                      ],
+                    ),
+                  ],
+                ),
                 //다음문제 가기 아이콘
                 PassProblem[1],
-
               ]
             ),
 
             //나가기 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ExitButton,
-              ],
+              children: [ExitButton],
             )
 
           ],
@@ -96,4 +105,17 @@ List<Widget> PassProblem = [
     onTap: (){},//TODO: 다음 문제 불러오기
   ),
 ];
+Widget Question = Image.asset('imges/sand.png',width: 100,height: 100,);
+List<Widget> SelectAns =[
+  Text(
+    '모래', 
+    style: TextStyle(fontSize: 30),
+    
+    ),
 
+  Text(
+    '모레',
+    style: TextStyle(fontSize: 30),
+  )
+
+];

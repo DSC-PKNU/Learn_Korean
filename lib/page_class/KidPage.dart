@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'StudyStagePage.dart';
 import 'parent_page.dart';
+import 'IncorrectProblem.dart';
+import 'Othography.dart';
 // 첫 시작 페이지 : 아이 계정
 
 String img_path = 'images/KidPage';
@@ -12,13 +14,14 @@ class KidPage extends StatefulWidget {
 class KidPage_State extends State<KidPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Row(
+    return SafeArea(
+          child: Scaffold(
+        body: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
           children: <Widget>[
             //왼쪽 줄 : 받아쓰기, 맞춤법 공부
-            kid_page_card[0],
+            kid_page_card[0], 
             //오른쪽 줄 : 틀린 문제, 칭찬 모으기
             kid_page_card[1],
             //보호자 계정으로 전환 버튼
@@ -26,7 +29,6 @@ class KidPage_State extends State<KidPage> {
           ],
         ),
       ),
-      
     );
   }
 }
@@ -45,8 +47,7 @@ List<Widget> kid_page_card= [
       //맞춤법 공부
       Expanded(child: ReusableCard(
         text: "othography",
-        //TODO: 맞춤법 공부 페이지 연결
-        cardChild: Text('맞춤법 공부 페이지'),
+        cardChild: Orthography(),
         ),
       ),
     ],),
@@ -60,7 +61,7 @@ List<Widget> kid_page_card= [
         child: ReusableCard(
           text: 'incorrect',
           //TODO: 틀린 문제 페이지 연결
-          cardChild: Text('오답 노트 페이지'),
+          cardChild: IncorrectProblem(),
         ),
       ),
       //칭찬판
