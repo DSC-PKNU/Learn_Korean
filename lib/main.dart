@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.landscapeRight
       ]);
     return MaterialApp(
-      home: KidPage(), //아이계정으로 시작
+      //아이계정으로 시작
+      home: KidPage(),
     );
   }
 }
