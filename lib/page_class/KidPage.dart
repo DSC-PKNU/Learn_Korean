@@ -28,7 +28,6 @@ class KidPage_State extends State<KidPage> {
             ConvertToParents(context)
           ],
         ),
-        
       ),
     );
   }

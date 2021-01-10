@@ -3,6 +3,8 @@ import 'package:learn_korean_for_children/page_class/Explanation.dart';
 import 'KidPage.dart';
 import 'RegistProblem.dart';
 
+String img_path = 'images/ParentPage';
+
 class ParentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,14 +31,14 @@ List<Widget> parent_page_card = [
         //어플설명
         Expanded(
           child: ReusableCard(
-            text: "어플 설명",
+            text: "wrong_problem",
             cardChild: Explanation(),
           ),
         ),
         //틀린 문제
         Expanded(
           child: ReusableCard(
-            text: "틀린 문제",
+            text: "praise",
             cardChild: RegistProblem(),
           ),
         ),
@@ -51,14 +53,14 @@ List<Widget> parent_page_card = [
         //문제 등록
         Expanded(
           child: ReusableCard(
-            text: '문제 등록',
+            text: 'regist_problem',
             cardChild: RegistProblem(),
           ),
         ),
         //칭찬판
         Expanded(
           child: ReusableCard(
-            text: '칭찬판',
+            text: 'howtouse',
             cardChild: Text('칭찬판'),
           ),
         ),
@@ -69,7 +71,7 @@ List<Widget> parent_page_card = [
 
 Widget ConvertToKids(BuildContext context) {
   return InkWell(
-    child: Image.asset('images/KidPage/convert_to_parent.png',
+    child: Image.asset('images/ParentPage/convert_to_kid.png',
         width: 120, height: 120),
     onTap: () {
       Navigator.push(
@@ -90,31 +92,50 @@ class ReusableCard extends StatelessWidget {
   final Widget cardChild;
   final String text;
 
+  Widget addButton(BuildContext context){
+    return InkWell(
+        child: Image.asset('$img_path/$text.png', width: 300, height: 300),
+        onTap: () => Navigator.push(context,
+            MaterialPageRoute<void>(
+                builder: (BuildContext context) {
+                  return cardChild;
+                }
+            )
+        )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: FlatButton(
-        onPressed: () {
-          print('successfully clicked');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return cardChild;
-              },
-            ),
-          );
-        },
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 40.0,
-          ),
-        ),
+      // margin: EdgeInsets.all(10),
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(10.0),
+      // ),
+      // child: FlatButton(
+      //   onPressed: () {
+      //     print('successfully clicked');
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (BuildContext context) {
+      //           return cardChild;
+      //         },
+      //       ),
+      //     );
+      //   },
+      //   child: Text(
+      //     text,
+      //     style: TextStyle(
+      //       fontSize: 40.0,
+      //     ),
+      //   ),
+      // ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          addButton(context)
+        ],
       ),
     );
   }
