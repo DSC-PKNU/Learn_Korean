@@ -1,40 +1,18 @@
 import 'package:flutter/material.dart';
+import 'KidPage.dart';
+import 'RegistProblem.dart';
 
 class ParentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.cyanAccent,
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Learn Korean',
-          ),
-        ),
-      ),
       body: SafeArea(
-        child: Column(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
-            Expanded(
-              child: ReusableCard(
-                cardChild: RegistProblem(),
-                text: '문제 등록',
-                colour: Colors.red[400],
-              ),
-            ),
-            Expanded(
-              child: ReusableCard(
-                cardChild: RegistProblem(),
-                text: '상품 등록',
-                colour: Colors.deepOrangeAccent,
-              ),
-            ),
-            Expanded(
-              child: ReusableCard(
-                  cardChild: RegistProblem(),
-                  text: '아이 페이지 전환',
-                  colour: Colors.yellow[400]),
-            ),
+            parent_page_card[0],
+            parent_page_card[1],
+            ConvertToKids(context),
           ],
         ),
       ),
@@ -42,20 +20,75 @@ class ParentPage extends StatelessWidget {
   }
 }
 
+List<Widget> parent_page_card = [
+  //왼쪽 줄
+  Expanded(
+    child: Column(
+      children: <Widget>[
+        //어플설명
+        Expanded(
+          child: ReusableCard(
+            text: "어플 설명",
+            cardChild: RegistProblem(),
+          ),
+        ),
+        //틀린 문제
+        Expanded(
+          child: ReusableCard(
+            text: "틀린 문제",
+            cardChild: RegistProblem(),
+          ),
+        ),
+      ],
+    ),
+  ),
+
+  //두번째 줄
+  Expanded(
+    child: Column(
+      children: <Widget>[
+        //문제 등록
+        Expanded(
+          child: ReusableCard(
+            text: '문제 등록',
+            cardChild: RegistProblem(),
+          ),
+        ),
+        //칭찬판
+        Expanded(
+          child: ReusableCard(
+            text: '칭찬판',
+            cardChild: Text('칭찬판'),
+          ),
+        ),
+      ],
+    ),
+  ),
+];
+
+Widget ConvertToKids(BuildContext context) {
+  return InkWell(
+      child: Image.asset('images/KidPage/convert_to_parent.png',
+          width: 120, height: 120),
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute<void>(builder: (BuildContext context) {
+          return KidPage();
+        }));
+      });
+}
+
 class ReusableCard extends StatelessWidget {
-  ReusableCard({this.cardChild, this.text, this.colour});
+  ReusableCard({this.cardChild, this.text});
 
   final Widget cardChild;
   final String text;
-  final colour;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
-      height: 200.0,
-      width: 400.0,
       decoration: BoxDecoration(
-        color: colour,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: FlatButton(
@@ -78,17 +111,5 @@ class ReusableCard extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class RegistProblem extends StatefulWidget {
-  @override
-  _RegistProblemState createState() => _RegistProblemState();
-}
-
-class _RegistProblemState extends State<RegistProblem> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
