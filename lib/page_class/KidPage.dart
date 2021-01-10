@@ -12,19 +12,21 @@ class KidPage extends StatefulWidget {
 class KidPage_State extends State<KidPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.baseline,
-        children: <Widget>[
-          //왼쪽 줄 : 받아쓰기, 맞춤법 공부
-          kid_page_card[0], 
-          //오른쪽 줄 : 틀린 문제, 칭찬 모으기
-          kid_page_card[1],
-          //보호자 계정으로 전환 버튼
-          ConvertToParents(context)
-        ],
+    return SafeArea(
+          child: Scaffold(
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          children: <Widget>[
+            //왼쪽 줄 : 받아쓰기, 맞춤법 공부
+            kid_page_card[0], 
+            //오른쪽 줄 : 틀린 문제, 칭찬 모으기
+            kid_page_card[1],
+            //보호자 계정으로 전환 버튼
+            ConvertToParents(context)
+          ],
+        ),
+        
       ),
-      
     );
   }
 }
