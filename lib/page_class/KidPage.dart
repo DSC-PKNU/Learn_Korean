@@ -16,6 +16,7 @@ class KidPage_State extends State<KidPage> {
           child: Scaffold(
         body: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
           children: <Widget>[
             //왼쪽 줄 : 받아쓰기, 맞춤법 공부
             kid_page_card[0], 
