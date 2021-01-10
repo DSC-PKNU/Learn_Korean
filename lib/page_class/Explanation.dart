@@ -12,9 +12,9 @@ class _ExplanationState extends State<Explanation> {
   int ExplanationNumber = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
           children: [
             Expanded(
               flex: 12,
