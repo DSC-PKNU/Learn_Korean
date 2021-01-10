@@ -123,7 +123,7 @@ class ReusableCard extends StatelessWidget {
   Widget addText(BuildContext context){
     return InkWell( 
       child: Text(
-                  '\n   \t$round단계',
+                  '\n    \t$round단계',
                   style: TextStyle(fontSize: 20.0),
                   ),
       onTap: () => Navigator.push(context, 
