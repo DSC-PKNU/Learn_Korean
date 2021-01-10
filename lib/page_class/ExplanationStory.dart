@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class ExplanationStory {
   String ExplanationTitle;
   String choice1;

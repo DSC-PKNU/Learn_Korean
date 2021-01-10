@@ -95,17 +95,13 @@ class ReusableCard extends StatelessWidget {
   final Widget cardChild;
   final String text;
 
-  Widget addButton(BuildContext context){
+  Widget addButton(BuildContext context) {
     return InkWell(
         child: Image.asset('$img_path/$text.png', width: 300, height: 300),
         onTap: () => Navigator.push(context,
-            MaterialPageRoute<void>(
-                builder: (BuildContext context) {
-                  return cardChild;
-                }
-            )
-        )
-    );
+                MaterialPageRoute<void>(builder: (BuildContext context) {
+              return cardChild;
+            })));
   }
 
   @override
@@ -136,9 +132,7 @@ class ReusableCard extends StatelessWidget {
       // ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          addButton(context)
-        ],
+        children: [addButton(context)],
       ),
     );
   }
