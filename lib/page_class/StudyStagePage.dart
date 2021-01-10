@@ -101,7 +101,19 @@ class ReusableCard extends StatelessWidget {
             ),
           );
   }
-
+  Widget addButton(BuildContext context){
+    return InkWell(
+            //TODO: 버튼 이미지 할당
+            child: Image.asset('images/emoticon.png', width: 200, height: 400),
+            onTap: () => Navigator.push(context, 
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return cardChild;
+                  }
+                )
+              )
+          );
+  }
   @override
   Widget build(BuildContext context) {
     List<Widget> star = new List<Widget>();
