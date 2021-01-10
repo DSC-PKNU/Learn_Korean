@@ -12,6 +12,7 @@ class ParentPage extends StatelessWidget {
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
           children: [
             parent_page_card[0],
             parent_page_card[1],
