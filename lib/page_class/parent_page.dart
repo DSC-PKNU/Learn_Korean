@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_korean_for_children/page_class/Explanation.dart';
 import 'KidPage.dart';
 import 'RegistProblem.dart';
 
@@ -29,7 +30,7 @@ List<Widget> parent_page_card = [
         Expanded(
           child: ReusableCard(
             text: "어플 설명",
-            cardChild: RegistProblem(),
+            cardChild: Explanation(),
           ),
         ),
         //틀린 문제
@@ -68,14 +69,19 @@ List<Widget> parent_page_card = [
 
 Widget ConvertToKids(BuildContext context) {
   return InkWell(
-      child: Image.asset('images/KidPage/convert_to_parent.png',
-          width: 120, height: 120),
-      onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute<void>(builder: (BuildContext context) {
-          return KidPage();
-        }));
-      });
+    child: Image.asset('images/KidPage/convert_to_parent.png',
+        width: 120, height: 120),
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) {
+            return KidPage();
+          },
+        ),
+      );
+    },
+  );
 }
 
 class ReusableCard extends StatelessWidget {
