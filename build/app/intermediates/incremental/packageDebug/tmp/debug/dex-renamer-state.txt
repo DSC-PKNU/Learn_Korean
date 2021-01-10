@@ -1,4 +1,4 @@
-#Sun Jan 10 17:32:33 KST 2021
-base.0=/Users/cha-ji/Git/Learn_Korean/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+#Sun Jan 10 19:08:39 KST 2021
+base.0=C\:\\Users\\NARIN\\projects\\Learn_Korean\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

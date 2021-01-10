@@ -13,6 +13,7 @@ class KidPage_State extends State<KidPage> {
     return Scaffold(
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
         children: <Widget>[
           //왼쪽 줄 : 공부 시작, 받아쓰기 연습, 맞춤법 공부
           kid_page_card[0], 
