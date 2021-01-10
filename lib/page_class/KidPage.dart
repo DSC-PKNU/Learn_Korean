@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'StudyStagePage.dart';
 import 'parent_page.dart';
+import 'IncorrectProblem.dart';
+import 'Othography.dart';
 // 첫 시작 페이지 : 아이 계정
 
 String img_path = 'images/KidPage';
@@ -45,8 +47,7 @@ List<Widget> kid_page_card= [
       //맞춤법 공부
       Expanded(child: ReusableCard(
         text: "othography",
-        //TODO: 맞춤법 공부 페이지 연결
-        cardChild: Text('맞춤법 공부 페이지'),
+        cardChild: Orthography(),
         ),
       ),
     ],),
@@ -60,7 +61,7 @@ List<Widget> kid_page_card= [
         child: ReusableCard(
           text: 'incorrect',
           //TODO: 틀린 문제 페이지 연결
-          cardChild: Text('오답 노트 페이지'),
+          cardChild: IncorrectProblem(),
         ),
       ),
       //칭찬판
