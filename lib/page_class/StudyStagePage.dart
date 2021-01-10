@@ -108,9 +108,8 @@ class ReusableCard extends StatelessWidget {
   }
   Widget addButton(BuildContext context){
     return InkWell(
-            //TODO: 버튼 이미지 할당
             child: 
-              Image.asset('$img_path/stage_background.png', width: 100, height: 20),
+              Image.asset('$img_path/stage_background.png', width: 80, height: 50,fit: BoxFit.fill,),
 
             onTap: () => Navigator.push(context, 
                 MaterialPageRoute<void>(
@@ -130,14 +129,14 @@ class ReusableCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //TODO: 버튼 디자인
             Row(
               children: star,
             ),
             Stack(
+              
               children: <Widget>[
                 addButton(context),
-                Text('$round단계')
+                Text('\n     $round단계')
               ]
             ),
         ],
