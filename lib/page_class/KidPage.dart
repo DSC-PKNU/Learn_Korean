@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'StudyStagePage.dart';
 import 'parent_page.dart';
 // 첫 시작 페이지 : 아이 계정
+
+String img_path = 'images/KidPage';
 class KidPage extends StatefulWidget {
   @override
   KidPage_State createState() => KidPage_State();
@@ -14,25 +16,12 @@ class KidPage_State extends State<KidPage> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.baseline,
         children: <Widget>[
-          //왼쪽 줄 : 공부 시작, 받아쓰기 연습, 맞춤법 공부
+          //왼쪽 줄 : 받아쓰기, 맞춤법 공부
           kid_page_card[0], 
-          //오른쪽 줄 : 틀린 문제, 칭찬판
+          //오른쪽 줄 : 틀린 문제, 칭찬 모으기
           kid_page_card[1],
+          //보호자 계정으로 전환 버튼
           ConvertToParents(context)
-          //보호자 계정 전환
-          // FloatingActionButton.extended(
-          //   label: Text('보호자\n 계정'),
-          //   onPressed: (){
-          //     Navigator.push(context, 
-          //     MaterialPageRoute<void>(
-          //       builder: (BuildContext context) {
-          //         return ParentPage();
-          //       }
-          //     )
-          //   );
-          // },//보호자 계정 전환
-          // backgroundColor: Colors.orange,
-          // )
         ],
       ),
       
@@ -111,7 +100,7 @@ class ReusableCard extends StatelessWidget {
   Widget addButton(BuildContext context){
     return InkWell(
             //TODO: 버튼 이미지 할당
-            child: Image.asset('images/KidPage/$text.png', width: 300, height: 300),
+            child: Image.asset('$img_path/$text.png', width: 300, height: 300),
             onTap: () => Navigator.push(context, 
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) {
