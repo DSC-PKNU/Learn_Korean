@@ -1,4 +1,4 @@
-#Sat Jan 09 20:17:30 KST 2021
+#Sun Jan 10 15:07:06 KST 2021
 base.0=/Users/cha-ji/Git/Learn_Korean/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

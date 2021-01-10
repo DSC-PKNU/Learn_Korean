@@ -34,7 +34,6 @@ class _StudyStagePageState extends State<StudyStagePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                //TODO: 단계별 입장 버튼 추가하기
                   stage_button[0],
                   stage_button[1],
                   stage_button[2]
@@ -58,12 +57,10 @@ class _StudyStagePageState extends State<StudyStagePage> {
               color: Colors.yellow,
               ), 
               onPressed: (){
-                //다음 페이지로 넘기기
+                //TODO: 다음 페이지로 넘기기
               })
         ],
       ),
-      
-      //TODO: 페이지 넘김 버튼 추가하기
      
     );
   }
@@ -83,34 +80,43 @@ List<Widget> stage_button = [
 class ReusableCard extends StatelessWidget {
 
   ReusableCard({this.cardChild, this.round,});
+  //TODO: 문제 저장 클래스, 점수 저장 클래스와 연동시켜야 한다.
 
   final Widget cardChild; //눌렀을 때 전환될 페이지 TODO: 널 페이지 반환 해결하기
   final int round;        //현재 몇단계인지, TODO: 반복문으로 해결해보자
-  final int star_score = 2;
+  final int star_score = 1;
+
+  
+  void add_star(List list){
+    for(int i = 0; i < star_score; i++)
+      list.add(Icon(
+            Icons.star,
+            color: Colors.yellow,
+            ),
+          );
+    for(int i = star_score; i < 3 ; i++)
+      list.add(Icon(
+            Icons.star,
+            color: Colors.blueGrey,
+            ),
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> star = new List<Widget>();
+    add_star(star);
+    
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //TODO: 버튼 디자인이 못생겼음, 동그랗지 않고 색도 바꿔야 한다.
-          //TODO: 별 획득 반복문 어떻게 나타내는지 모르겠다.
-            Row(
-              children: [
-                Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                  ),
-                Icon(
-                  Icons.star,
-                  color: Colors.blueGrey,
-            ),
-              ],
+          //TODO: 버튼 디자인
+            new Row(
+              children: star
             ),
 
-            
-          FloatingActionButton.extended(
-            
+          FloatingActionButton.extended(    
             heroTag: round,
             backgroundColor: Colors.purple,
             onPressed: (){
