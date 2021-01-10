@@ -11,48 +11,50 @@ class StudyStagePage extends StatefulWidget {
 class _StudyStagePageState extends State<StudyStagePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //스테이지 버튼
-      body: Row(
-        children: [
-          //뒤로가기 버튼
-          Column(
-            children: [
-              BackPage(context),
-              SizedBox(height: 200,)
-            ],
-          ),
-          //스테이지 버튼
-          Row(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //위에 세줄
-                  Row(
-                    children: <Widget>[
-                      stage_button[0],
-                      stage_button[1],
-                      stage_button[2]
-                    ],),
+    return SafeArea(
+          child: Scaffold(
+        //스테이지 버튼
+        body: Row(
+          children: [
+            //뒤로가기 버튼
+            Column(
+              children: [
+                BackPage(context),
+                SizedBox(height: 200,)
+              ],
+            ),
+            //스테이지 버튼
+            Row(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //위에 세줄
+                    Row(
+                      children: <Widget>[
+                        stage_button[0],
+                        stage_button[1],
+                        stage_button[2]
+                      ],),
 
-                  //아래 세줄
-                  Row(
-                    children: <Widget>[
-                      stage_button[3],
-                      stage_button[4],
-                      stage_button[5]
-                    ],),
-                ],
-              ),
+                    //아래 세줄
+                    Row(
+                      children: <Widget>[
+                        stage_button[3],
+                        stage_button[4],
+                        stage_button[5]
+                      ],),
+                  ],
+                ),
 
-              // 다음 페이지로 넘기기 버튼
-              PassStep[0]
-            ],
-          ),
-        ],
+                // 다음 페이지로 넘기기 버튼
+                PassStep[0]
+              ],
+            ),
+          ],
+        ),
+       
       ),
-     
     );
   }
 }
@@ -108,9 +110,7 @@ class ReusableCard extends StatelessWidget {
   }
   Widget addButton(BuildContext context){
     return InkWell(
-            child: 
-              Image.asset('$img_path/stage_background.png', width: 80, height: 50,fit: BoxFit.fill,),
-
+            child: Image.asset('$img_path/stage_background.png', width: 100, height: 80,),
             onTap: () => Navigator.push(context, 
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) {
@@ -119,6 +119,21 @@ class ReusableCard extends StatelessWidget {
                 )
               )
           );
+  }
+  Widget addText(BuildContext context){
+    return InkWell( 
+      child: Text(
+                  '\n   \t$round단계',
+                  style: TextStyle(fontSize: 20.0),
+                  ),
+      onTap: () => Navigator.push(context, 
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return cardChild;
+                  }
+                )
+              )
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -133,10 +148,10 @@ class ReusableCard extends StatelessWidget {
               children: star,
             ),
             Stack(
-              
               children: <Widget>[
                 addButton(context),
-                Text('\n     $round단계')
+                addText(context),
+                
               ]
             ),
         ],
