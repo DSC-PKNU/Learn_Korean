@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:learn_korean_for_children/page_class/Explanation.dart';
+import 'package:learn_korean_for_children/page_class/IncorrectProblem.dart';
 import 'KidPage.dart';
 import 'RegistProblem.dart';
+import 'PrarentPraise.dart';
 
 String img_path = 'images/ParentPage';
 
 class ParentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Row(
+    return SafeArea(
+      child: Scaffold(
+        body: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
             parent_page_card[0],
@@ -32,14 +34,14 @@ List<Widget> parent_page_card = [
         Expanded(
           child: ReusableCard(
             text: "wrong_problem",
-            cardChild: Explanation(),
+            cardChild: IncorrectProblem(),
           ),
         ),
         //틀린 문제
         Expanded(
           child: ReusableCard(
             text: "praise",
-            cardChild: RegistProblem(),
+            cardChild: ParentPraise(),
           ),
         ),
       ],
@@ -61,7 +63,7 @@ List<Widget> parent_page_card = [
         Expanded(
           child: ReusableCard(
             text: 'howtouse',
-            cardChild: Text('칭찬판'),
+            cardChild: Explanation(),
           ),
         ),
       ],
