@@ -16,7 +16,9 @@ class _ParentPraiseState extends State<ParentPraise> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   child: Text(
                     '상품 추가',
@@ -29,27 +31,13 @@ class _ParentPraiseState extends State<ParentPraise> {
                 SizedBox(
                   height: 50,
                 ),
-                ReusableProduct(
-                    text: '1단계'
-                ),
-                ReusableProduct(
-                  text: '2단계'
-                ),
-                ReusableProduct(
-                    text: '3단계'
-                ),
-                ReusableProduct(
-                    text: '4단계'
-                ),
-                ReusableProduct(
-                    text: '5단계'
-                ),
-                ReusableProduct(
-                    text: '6단계'
-                ),
-                ReusableProduct(
-                    text: '7단계'
-                ),
+                ReusableProduct(text: '1단계'),
+                ReusableProduct(text: '2단계'),
+                ReusableProduct(text: '3단계'),
+                ReusableProduct(text: '4단계'),
+                ReusableProduct(text: '5단계'),
+                ReusableProduct(text: '6단계'),
+                ReusableProduct(text: '7단계'),
               ],
             ),
           ],
@@ -58,6 +46,7 @@ class _ParentPraiseState extends State<ParentPraise> {
     );
   }
 }
+
 class ReusableProduct extends StatelessWidget {
   ReusableProduct({this.text});
   final String text;
@@ -66,7 +55,9 @@ class ReusableProduct extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        SizedBox(width: 20,),
+        SizedBox(
+          width: 20,
+        ),
         Container(
           color: Colors.red[200],
           child: Text(
@@ -94,7 +85,9 @@ class ReusableProduct extends StatelessWidget {
           color: Colors.blue[100],
           child: Text('상품 관리'),
         ),
-        SizedBox(width: 20,),
+        SizedBox(
+          width: 20,
+        ),
       ],
     );
   }
