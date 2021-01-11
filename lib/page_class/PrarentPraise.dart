@@ -20,7 +20,8 @@ class _ParentPraiseState extends State<ParentPraise> {
                   height: 20,
                 ),
                 Container(
-                  child: Text(
+                  child:
+                  Text(
                     '상품 추가',
                     style: TextStyle(
                       fontSize: 30,
@@ -29,7 +30,7 @@ class _ParentPraiseState extends State<ParentPraise> {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
                 ReusableProduct(text: '1단계'),
                 ReusableProduct(text: '2단계'),
@@ -50,25 +51,28 @@ class _ParentPraiseState extends State<ParentPraise> {
 class ReusableProduct extends StatelessWidget {
   ReusableProduct({this.text});
   final String text;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        SizedBox(
-          width: 20,
-        ),
-        Container(
-          color: Colors.red[200],
-          child: Text(
-            '$text',
-            style: TextStyle(
-              fontSize: 20,
+        SizedBox(width: 10,),
+        Stack(
+          children: [
+            Image.asset('images/ParentPraise/ParentPraise_background.png',width: 100,height: 80,),
+            Container(
+              margin: EdgeInsets.all(25),
+              child: Text('$text',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),),
             ),
-          ),
+          ],
         ),
         SizedBox(
-          width: 20,
+          width: 10,
         ),
         Container(
           height: 30,
@@ -85,9 +89,7 @@ class ReusableProduct extends StatelessWidget {
           color: Colors.blue[100],
           child: Text('상품 관리'),
         ),
-        SizedBox(
-          width: 20,
-        ),
+        SizedBox(width: 15,),
       ],
     );
   }
