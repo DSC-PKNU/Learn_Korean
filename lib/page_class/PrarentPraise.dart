@@ -16,7 +16,9 @@ class _ParentPraiseState extends State<ParentPraise> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   child:
                   Text(
@@ -30,27 +32,13 @@ class _ParentPraiseState extends State<ParentPraise> {
                 SizedBox(
                   height: 10,
                 ),
-                ReusableProduct(
-                    text: '1단계'
-                ),
-                ReusableProduct(
-                  text: '2단계'
-                ),
-                ReusableProduct(
-                    text: '3단계'
-                ),
-                ReusableProduct(
-                    text: '4단계'
-                ),
-                ReusableProduct(
-                    text: '5단계'
-                ),
-                ReusableProduct(
-                    text: '6단계'
-                ),
-                ReusableProduct(
-                    text: '7단계'
-                ),
+                ReusableProduct(text: '1단계'),
+                ReusableProduct(text: '2단계'),
+                ReusableProduct(text: '3단계'),
+                ReusableProduct(text: '4단계'),
+                ReusableProduct(text: '5단계'),
+                ReusableProduct(text: '6단계'),
+                ReusableProduct(text: '7단계'),
               ],
             ),
           ],
@@ -59,6 +47,7 @@ class _ParentPraiseState extends State<ParentPraise> {
     );
   }
 }
+
 class ReusableProduct extends StatelessWidget {
   ReusableProduct({this.text});
   final String text;
