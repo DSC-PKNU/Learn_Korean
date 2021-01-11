@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:learn_korean_for_children/page_class/Explanation.dart';
+import 'package:learn_korean_for_children/page_class/IncorrectProblem.dart';
 import 'KidPage.dart';
 import 'RegistProblem.dart';
+import 'PrarentPraise.dart';
+
+String img_path = 'images/ParentPage';
 
 class ParentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Row(
+    return SafeArea(
+      child: Scaffold(
+        body: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
           children: [
             parent_page_card[0],
             parent_page_card[1],
@@ -29,15 +34,15 @@ List<Widget> parent_page_card = [
         //어플설명
         Expanded(
           child: ReusableCard(
-            text: "어플 설명",
-            cardChild: Explanation(),
+            text: "wrong_problem",
+            cardChild: IncorrectProblem(),
           ),
         ),
         //틀린 문제
         Expanded(
           child: ReusableCard(
-            text: "틀린 문제",
-            cardChild: RegistProblem(),
+            text: "praise",
+            cardChild: ParentPraise(),
           ),
         ),
       ],
@@ -51,15 +56,15 @@ List<Widget> parent_page_card = [
         //문제 등록
         Expanded(
           child: ReusableCard(
-            text: '문제 등록',
+            text: 'regist_problem',
             cardChild: RegistProblem(),
           ),
         ),
         //칭찬판
         Expanded(
           child: ReusableCard(
-            text: '칭찬판',
-            cardChild: Text('칭찬판'),
+            text: 'howtouse',
+            cardChild: Explanation(),
           ),
         ),
       ],
@@ -69,7 +74,7 @@ List<Widget> parent_page_card = [
 
 Widget ConvertToKids(BuildContext context) {
   return InkWell(
-    child: Image.asset('images/KidPage/convert_to_parent.png',
+    child: Image.asset('images/ParentPage/convert_to_kid.png',
         width: 120, height: 120),
     onTap: () {
       Navigator.push(
@@ -90,31 +95,44 @@ class ReusableCard extends StatelessWidget {
   final Widget cardChild;
   final String text;
 
+  Widget addButton(BuildContext context) {
+    return InkWell(
+        child: Image.asset('$img_path/$text.png', width: 300, height: 300),
+        onTap: () => Navigator.push(context,
+                MaterialPageRoute<void>(builder: (BuildContext context) {
+              return cardChild;
+            })));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: FlatButton(
-        onPressed: () {
-          print('successfully clicked');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return cardChild;
-              },
-            ),
-          );
-        },
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 40.0,
-          ),
-        ),
+      // margin: EdgeInsets.all(10),
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(10.0),
+      // ),
+      // child: FlatButton(
+      //   onPressed: () {
+      //     print('successfully clicked');
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (BuildContext context) {
+      //           return cardChild;
+      //         },
+      //       ),
+      //     );
+      //   },
+      //   child: Text(
+      //     text,
+      //     style: TextStyle(
+      //       fontSize: 40.0,
+      //     ),
+      //   ),
+      // ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [addButton(context)],
       ),
     );
   }
