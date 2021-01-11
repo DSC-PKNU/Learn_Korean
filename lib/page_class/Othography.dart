@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // 맞춤법 문제가 음성으로 출제되고, 고르는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
 // TODO: 맞춤법 선택한 답을 백엔드에 전달하기
-String img_path = 'images/StudyDictation';
+String imgPath = 'images/Othography';
 
 class Orthography extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class _OrthographyState extends State<Orthography> {
                   Column(
                     children: [
                       //그림
-                      Text('\n\n문제 출제 그림\n\n\n\n'),
+                      Question,
                       Row(
                         children: [
                           SelectAns[0],
@@ -63,7 +63,7 @@ class _OrthographyState extends State<Orthography> {
 
 Widget ExitButton = InkWell(
   child: Image.asset(
-    '$img_path/exit_button.png',
+    '$imgPath/exit_button.png',
     width: 150,
     height: 100,
   ),
@@ -72,7 +72,7 @@ Widget ExitButton = InkWell(
 Widget VolumeIcon = InkWell(
   child: Image.asset(
     //TODO: 볼륨 아이콘 변경
-    '$img_path/volume.png',
+    '$imgPath/volume.png',
     width: 150,
     height: 70,
   ),
@@ -83,7 +83,7 @@ Widget VolumeIcon = InkWell(
 List<Widget> PassProblem = [
   InkWell(
     child: Image.asset(
-      '$img_path/prev_problem.png',
+      '$imgPath/prev_problem.png',
       width: 200,
       height: 200,
     ),
@@ -91,7 +91,7 @@ List<Widget> PassProblem = [
   ),
   InkWell(
     child: Image.asset(
-      '$img_path/next_problem.png',
+      '$imgPath/next_problem.png',
       width: 150,
       height: 150,
     ),
@@ -99,7 +99,7 @@ List<Widget> PassProblem = [
   ),
 ];
 Widget Question = Image.asset(
-  'imges/sand.png',
+  '$imgPath/sand.png',
   width: 100,
   height: 100,
 );
