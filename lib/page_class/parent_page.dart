@@ -5,7 +5,7 @@ import 'KidPage.dart';
 import 'RegistProblem.dart';
 import 'PrarentPraise.dart';
 
-String img_path = 'images/ParentPage';
+String imgPath = 'images/ParentPage';
 
 class ParentPage extends StatelessWidget {
   @override
@@ -16,9 +16,9 @@ class ParentPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
-            parent_page_card[0],
-            parent_page_card[1],
-            ConvertToKids(context),
+            parentPageCard[0],
+            parentPageCard[1],
+            convertToKids(context),
           ],
         ),
       ),
@@ -26,7 +26,7 @@ class ParentPage extends StatelessWidget {
   }
 }
 
-List<Widget> parent_page_card = [
+List<Widget> parentPageCard = [
   //왼쪽 줄
   Expanded(
     child: Column(
@@ -72,19 +72,12 @@ List<Widget> parent_page_card = [
   ),
 ];
 
-Widget ConvertToKids(BuildContext context) {
+Widget convertToKids(BuildContext context) {
   return InkWell(
-    child: Image.asset('images/ParentPage/convert_to_kid.png',
+    child: Image.asset('$imgPath/convert_to_kid.png',
         width: 120, height: 120),
     onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) {
-            return KidPage();
-          },
-        ),
-      );
+      Navigator.pop(context);
     },
   );
 }
@@ -97,7 +90,7 @@ class ReusableCard extends StatelessWidget {
 
   Widget addButton(BuildContext context) {
     return InkWell(
-        child: Image.asset('$img_path/$text.png', width: 300, height: 300),
+        child: Image.asset('$imgPath/$text.png', width: 300, height: 300),
         onTap: () => Navigator.push(context,
                 MaterialPageRoute<void>(builder: (BuildContext context) {
               return cardChild;
