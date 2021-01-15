@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_korean_for_children/page_class/StudyDictation.dart';
 import 'IncorrectProblemForParent.dart';
-String imgPath = 'images/IncorrectProblem'; //TODO: 이미지 경로 설정
+String imgPath = 'images/IncorrectProblem';
 
 // 맞춤법
 class IncorrectProblem extends StatefulWidget {
