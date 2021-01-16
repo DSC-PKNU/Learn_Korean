@@ -3,7 +3,7 @@ import 'package:learn_korean_for_children/data/problemData.dart';
 import 'package:learn_korean_for_children/page_class/StudyDictation.dart';
 
 String imgPath = 'images/StudyStagePage';
-
+//TODO: 충돌을 수정한 부분에서 문제가 없는지 확인하자.
 // 단어 공부 페이지
 class StudyStagePage extends StatefulWidget {
   @override

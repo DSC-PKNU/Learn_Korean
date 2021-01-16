@@ -8,6 +8,7 @@ import 'package:learn_korean_for_children/model/ProblemModel.dart';
 // 단어 문제가 음성으로 출제되고, 받아쓰는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
 // TODO: 받아쓴 글자를 글자 인식 부분에 전달하기
+//TODO: 충돌을 수정한 부분에서 문제가 없는지 확인하자.
 String imgPath = 'images/StudyDictation';
 
 class StudyDictation extends StatefulWidget {
@@ -162,6 +163,7 @@ class _StudyDictationState extends State<StudyDictation> {
                   : SizedBox(),
             ),
           );
+
   }
 
   Widget exitButton(context) => InkWell(

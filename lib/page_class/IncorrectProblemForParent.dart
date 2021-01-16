@@ -103,9 +103,11 @@ class ReusableCard extends StatelessWidget {
 
   addOx() {
     if (ox == true)
-      return Text('O');
+      return Text('O',style: TextStyle(
+          fontSize: 30.0));
     else
-      return Text('X');
+      return Text('X',style: TextStyle(
+          fontSize: 30.0));
   }
 
   //아이의 답 이미지 추가
@@ -123,7 +125,12 @@ class ReusableCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        Text(correctAns),
+        Text(problemNum.toString(),style: TextStyle(
+          fontSize: 30.0
+        ),),
+        Text(correctAns,style: TextStyle(
+          fontSize: 30.0
+          )),
         addKidsAns(), //클릭하면 들을 수 있다.
         addOx(), //ox 여부에 따라 O와 X 아이콘 보여줌
       ]),

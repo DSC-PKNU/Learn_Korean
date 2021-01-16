@@ -5,7 +5,7 @@ import 'IncorrectProblem.dart';
 import 'Othography.dart';
 // 첫 시작 페이지 : 아이 계정
 
-String img_path = 'images/KidPage';
+String imgPath = 'images/KidPage';
 
 class KidPage extends StatefulWidget {
   @override
@@ -22,11 +22,11 @@ class KidPage_State extends State<KidPage> {
           textBaseline: TextBaseline.alphabetic,
           children: <Widget>[
             //왼쪽 줄 : 받아쓰기, 맞춤법 공부
-            kid_page_card[0],
+            kidPageCard[0],
             //오른쪽 줄 : 틀린 문제, 칭찬 모으기
-            kid_page_card[1],
+            kidPageCard[1],
             //보호자 계정으로 전환 버튼
-            ConvertToParents(context)
+            convertToParents(context)
           ],
         ),
       ),
@@ -34,7 +34,7 @@ class KidPage_State extends State<KidPage> {
   }
 }
 
-List<Widget> kid_page_card = [
+List<Widget> kidPageCard = [
   //왼쪽 줄
   Expanded(
     child: Column(
@@ -65,7 +65,6 @@ List<Widget> kid_page_card = [
       Expanded(
         child: ReusableCard(
           text: 'incorrect',
-          //TODO: 틀린 문제 페이지 연결
           cardChild: IncorrectProblem(),
         ),
       ),
@@ -73,7 +72,6 @@ List<Widget> kid_page_card = [
       Expanded(
         child: ReusableCard(
           text: 'praise',
-          //TODO: 칭찬판 페이지 연결
           cardChild: Text('칭찬판 페이지'),
         ),
       ),
@@ -81,7 +79,7 @@ List<Widget> kid_page_card = [
   )),
 ];
 
-Widget ConvertToParents(BuildContext context) {
+Widget convertToParents(BuildContext context) {
   return InkWell(
       child: Image.asset('images/KidPage/convert_to_parent.png',
           width: 120, height: 120),
@@ -104,8 +102,7 @@ class ReusableCard extends StatelessWidget {
 
   Widget addButton(BuildContext context) {
     return InkWell(
-        //TODO: 버튼 이미지 할당
-        child: Image.asset('$img_path/$text.png', width: 300, height: 300),
+        child: Image.asset('$imgPath/$text.png', width: 300, height: 300),
         onTap: () => Navigator.push(context,
                 MaterialPageRoute<void>(builder: (BuildContext context) {
               return cardChild;
