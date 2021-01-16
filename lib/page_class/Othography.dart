@@ -52,7 +52,7 @@ class _OrthographyState extends State<Orthography> {
             //나가기 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [ExitButton],
+              children: [exitButton(context)],
             )
           ],
         ),
@@ -61,14 +61,16 @@ class _OrthographyState extends State<Orthography> {
   }
 }
 
-Widget ExitButton = InkWell(
-  child: Image.asset(
-    '$imgPath/exit_button.png',
-    width: 150,
-    height: 100,
-  ),
-  onTap: () {}, //TODO: 나가기
-);
+Widget exitButton(context) => InkWell(
+      child: Image.asset(
+        '$imgPath/exit_button.png',
+        width: 150,
+        height: 100,
+      ),
+      onTap: () {
+        Navigator.pop(context);
+      },
+    );
 Widget VolumeIcon = InkWell(
   child: Image.asset(
     //TODO: 볼륨 아이콘 변경

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 String imgPath = ''; //아이의 답을 저장한 폴더
 
 class IncorrectProblemForParents extends StatelessWidget {
+  IncorrectProblemForParents(this.stageIndex);
+  final int stageIndex;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +114,8 @@ class ReusableCard extends StatelessWidget {
   Widget addKidsAns() {
     return InkWell(
         //TODO: 버튼 이미지 할당
-        child: Image.asset('images/StudyStagePage/stage_background.png', width: 300, height: 200),
+        child: Image.asset('images/StudyStagePage/stage_background.png',
+            width: 300, height: 200),
         onTap: () => problemSound //TODO: 문제 음성 재생
 
         );
