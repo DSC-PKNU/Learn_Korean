@@ -18,7 +18,7 @@ class ParentPage extends StatelessWidget {
           children: [
             parent_page_card[0],
             parent_page_card[1],
-            ConvertToKids(context),
+            convertToKids(context),
           ],
         ),
       ),
@@ -72,7 +72,7 @@ List<Widget> parent_page_card = [
   ),
 ];
 
-Widget ConvertToKids(BuildContext context) {
+Widget convertToKids(BuildContext context) {
   return InkWell(
     child: Image.asset('images/ParentPage/convert_to_kid.png',
         width: 120, height: 120),

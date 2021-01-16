@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learn_korean_for_children/controllor/problem_regist_controllor.dart';
+import 'package:learn_korean_for_children/model/ProblemModel.dart';
 
 class RegistProblem extends StatefulWidget {
   @override
@@ -7,45 +9,87 @@ class RegistProblem extends StatefulWidget {
 }
 
 class _RegistProblemState extends State<RegistProblem> {
+  TextEditingController _problemTextFieldControllor = TextEditingController();
+  ProblemRegistControllor problemRegistControllor = ProblemRegistControllor();
+  @override
+  void initState() {
+    create();
+    super.initState();
+  }
+
+  List<ProblemModel> problems = [];
+
+  create() {
+    problemRegistControllor.loadSqlite().then((value) {
+      setState(() {
+        problems = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
-            Expanded(
-              child: SizedBox(),
+            Container(
+              height: MediaQuery.of(context).size.height - 69,
+              child: ListView.separated(
+                separatorBuilder: (context, index) => Divider(
+                  thickness: 3,
+                ),
+                itemCount: problems.length,
+                itemBuilder: (context, index) => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  child: Row(
+                    children: [
+                      Text(problems[index].problem),
+                      Spacer(),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          problemRegistControllor.deleteSqlite(problems[index]);
+                          create();
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: FlatButton(
-                    color: Colors.blue[200],
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => _dialog(),
-                      );
-                    },
-                    child: Text(
-                      '등록',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+            Container(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: Colors.blue[200],
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => _dialog(),
+                        );
+                      },
+                      child: Text(
+                        '등록',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    color: Colors.red[300],
-                    onPressed: () {
-                      //문제 삭제하는 함수
-                    },
-                    child: Text(
-                      '삭제',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: FlatButton(
+                      color: Colors.red[300],
+                      onPressed: () {
+                        //문제 삭제하는 함수
+                      },
+                      child: Text(
+                        '삭제',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),
@@ -80,17 +124,36 @@ class _RegistProblemState extends State<RegistProblem> {
                   right: screenWidth * 0.02,
                   bottom: 20),
               child: TextFormField(
+                controller: _problemTextFieldControllor,
                 expands: false,
                 decoration: InputDecoration(border: OutlineInputBorder()),
               )),
-              
           Row(
             children: [
               Expanded(
                 child: FlatButton(
                   color: Colors.blue[200],
                   onPressed: () {
-                    //문제 등록하는 함수
+                    if (_problemTextFieldControllor.text != null &&
+                        _problemTextFieldControllor.text != "") {
+                      problemRegistControllor
+                          .saveSqlite(ProblemModel(
+                              problem: _problemTextFieldControllor.text))
+                          .then((value) {
+                        if (value) {
+                          create();
+                          Navigator.pop(context);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('중복된 문제가 있습니다.'),
+                          ));
+                        }
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('문제를 입력하세요!'),
+                      ));
+                    }
                   },
                   child: Text(
                     '확인',
