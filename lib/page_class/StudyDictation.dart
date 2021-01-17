@@ -4,11 +4,15 @@ import 'package:learn_korean_for_children/controllor/wrong_problem_controllor.da
 import 'package:learn_korean_for_children/data/problemData.dart';
 import 'package:learn_korean_for_children/library/tts.dart';
 import 'package:learn_korean_for_children/model/ProblemModel.dart';
+import 'paint_dictation.dart';
+import 'package:painter/painter.dart';
+import 'dart:typed_data';
 
 // 단어 문제가 음성으로 출제되고, 받아쓰는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
 // TODO: 받아쓴 글자를 글자 인식 부분에 전달하기
 //TODO: 충돌을 수정한 부분에서 문제가 없는지 확인하자.
+//TODO: ScaffoldMessnger 버전문제 해결하자
 String imgPath = 'images/StudyDictation';
 
 class StudyDictation extends StatefulWidget {
@@ -18,6 +22,8 @@ class StudyDictation extends StatefulWidget {
   @override
   _StudyDictationState createState() =>
       _StudyDictationState(this.stageIndex, this.wrongProblemMode);
+
+
 }
 
 class _StudyDictationState extends State<StudyDictation> {
@@ -34,6 +40,8 @@ class _StudyDictationState extends State<StudyDictation> {
   int problemIndex = 0;
   int stageAllocationCount = 10; //각 스테이지에서 10개를 풀 수 있음
   List<ProblemModel> problems = [];
+
+
 
   @override
   void initState() {
@@ -66,10 +74,32 @@ class _StudyDictationState extends State<StudyDictation> {
       }
     }
     super.initState();
+    //그림판 설정=============================================
+    _controller = _newController();
   }
+  //그림판을 위한 변수
+  PainterController _controller;
+
+  PainterController _newController() {
+    PainterController controller = new PainterController();
+    controller.thickness = 5.0;
+    controller.backgroundColor = Colors.grey[300];
+    return controller;
+  }
+
+  //그림판=================================
 
   @override
   Widget build(BuildContext context) {
+      // List<Widget>actions = [
+      //   //지우기
+      //   new IconButton(
+      //       icon: new Icon(Icons.delete),
+      //       tooltip: 'Clear',
+      //       onPressed: _controller.clear),
+      // ];
+    
+
     return problems.length == 0
         ? SafeArea(
             child: Scaffold(
@@ -104,34 +134,37 @@ class _StudyDictationState extends State<StudyDictation> {
                         passProblem()[0],
 
                         // 받아쓰는 곳
-                        //TODO: 그림판 만들기
-
-                        //FIXME: 임시로 만들어둔 버튼
-                        Row(
-                          children: [
-                            RaisedButton(
-                              child: Text('정답'),
-                              onPressed: () {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text('정답'),
-                                ));
-                              },
-                            ),
-                            RaisedButton(
-                              child: Text('오답'),
-                              onPressed: () {
-                                WrongProblemControllor().saveSqlite(
-                                    stageIndex, problems[problemIndex]);
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(
-                                      '오답 ${problems[problemIndex].problem} 문제'),
-                                ));
-                              },
-                            )
-                          ],
+                        SizedBox(
+                          height: 200,
+                          width: 400,
+                          child:Painter(_controller)
                         ),
+                        //FIXME: 임시로 만들어둔 버튼
+                        // Row(
+                        //   children: [
+                        //     RaisedButton(
+                        //       child: Text('정답'),
+                        //       onPressed: () {
+                        //         // ScaffoldMessenger.of(context)
+                        //         //     .showSnackBar(SnackBar(
+                        //         //   content: Text('정답'),
+                        //         // ));
+                        //       },
+                        //     ),
+                        //     RaisedButton(
+                        //       child: Text('오답'),
+                        //       onPressed: () {
+                        //         WrongProblemControllor().saveSqlite(
+                        //             stageIndex, problems[problemIndex]);
+                        //         // ScaffoldMessenger.of(context)
+                        //         //     .showSnackBar(SnackBar(
+                        //         //   content: Text(
+                        //         //       '오답 ${problems[problemIndex].problem} 문제'),
+                        //         // ));
+                        //       },
+                        //     )
+                        //   ],
+                        // ),
                         //다음문제 가기 아이콘
                         passProblem()[1],
                       ]),
@@ -153,10 +186,10 @@ class _StudyDictationState extends State<StudyDictation> {
                       onPressed: () {
                         WrongProblemControllor()
                             .deleteSqlite(stageIndex, problems[problemIndex]);
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              '오답 ${problems[problemIndex].problem} 삭제 완료'),
-                        ));
+                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //   content: Text(
+                        //       '오답 ${problems[problemIndex].problem} 삭제 완료'),
+                        // ));
                       },
                       iconSize: 50,
                     )
@@ -170,7 +203,7 @@ class _StudyDictationState extends State<StudyDictation> {
         child: Image.asset(
           '$imgPath/exit_button.png',
           width: 150,
-          height: 100,
+          height: 50,
         ),
         onTap: () {
           Navigator.of(context).pop();
@@ -187,7 +220,12 @@ class _StudyDictationState extends State<StudyDictation> {
         },
       );
 
-// Widget PaintDictation = ; //TODO: 받아쓸 그림판
+
+
+
+
+
+
   List<Widget> passProblem() => [
         problemIndex != 0
             ? InkWell(
