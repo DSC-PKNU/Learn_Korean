@@ -4,7 +4,6 @@ import 'package:learn_korean_for_children/controllor/wrong_problem_controllor.da
 import 'package:learn_korean_for_children/data/problemData.dart';
 import 'package:learn_korean_for_children/library/tts.dart';
 import 'package:learn_korean_for_children/model/ProblemModel.dart';
-import 'paint_dictation.dart';
 import 'package:painter/painter.dart';
 import 'dart:typed_data';
 
@@ -22,8 +21,6 @@ class StudyDictation extends StatefulWidget {
   @override
   _StudyDictationState createState() =>
       _StudyDictationState(this.stageIndex, this.wrongProblemMode);
-
-
 }
 
 class _StudyDictationState extends State<StudyDictation> {
@@ -40,8 +37,6 @@ class _StudyDictationState extends State<StudyDictation> {
   int problemIndex = 0;
   int stageAllocationCount = 10; //각 스테이지에서 10개를 풀 수 있음
   List<ProblemModel> problems = [];
-
-
 
   @override
   void initState() {
@@ -77,6 +72,7 @@ class _StudyDictationState extends State<StudyDictation> {
     //그림판 설정=============================================
     _controller = _newController();
   }
+
   //그림판을 위한 변수
   PainterController _controller;
 
@@ -91,14 +87,13 @@ class _StudyDictationState extends State<StudyDictation> {
 
   @override
   Widget build(BuildContext context) {
-      // List<Widget>actions = [
-      //   //지우기
-      //   new IconButton(
-      //       icon: new Icon(Icons.delete),
-      //       tooltip: 'Clear',
-      //       onPressed: _controller.clear),
-      // ];
-    
+    // List<Widget>actions = [
+    //   //지우기
+    //   new IconButton(
+    //       icon: new Icon(Icons.delete),
+    //       tooltip: 'Clear',
+    //       onPressed: _controller.clear),
+    // ];
 
     return problems.length == 0
         ? SafeArea(
@@ -135,10 +130,9 @@ class _StudyDictationState extends State<StudyDictation> {
 
                         // 받아쓰는 곳
                         SizedBox(
-                          height: 200,
-                          width: 400,
-                          child:Painter(_controller)
-                        ),
+                            height: 200,
+                            width: 400,
+                            child: Painter(_controller)),
                         //FIXME: 임시로 만들어둔 버튼
                         // Row(
                         //   children: [
@@ -196,7 +190,6 @@ class _StudyDictationState extends State<StudyDictation> {
                   : SizedBox(),
             ),
           );
-
   }
 
   Widget exitButton(context) => InkWell(
@@ -219,12 +212,6 @@ class _StudyDictationState extends State<StudyDictation> {
           ttsSpeak(problems[problemIndex].problem);
         },
       );
-
-
-
-
-
-
 
   List<Widget> passProblem() => [
         problemIndex != 0
