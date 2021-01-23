@@ -4,7 +4,6 @@ import 'package:learn_korean_for_children/controllor/wrong_problem_controllor.da
 import 'package:learn_korean_for_children/data/problemData.dart';
 import 'package:learn_korean_for_children/library/tts.dart';
 import 'package:learn_korean_for_children/model/ProblemModel.dart';
-import 'paint_dictation.dart';
 import 'package:painter/painter.dart';
 import 'dart:typed_data';
 
