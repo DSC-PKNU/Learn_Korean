@@ -5,13 +5,15 @@ import 'package:learn_korean_for_children/data/problemData.dart';
 import 'package:learn_korean_for_children/library/tts.dart';
 import 'package:learn_korean_for_children/model/ProblemModel.dart';
 import 'package:painter/painter.dart';
+import 'package:tesseract_ocr/tesseract_ocr.dart';
 import 'dart:typed_data';
 
 // 단어 문제가 음성으로 출제되고, 받아쓰는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
-// TODO: 받아쓴 글자를 글자 인식 부분에 전달하기
-//TODO: 충돌을 수정한 부분에서 문제가 없는지 확인하자.
 //TODO: ScaffoldMessnger 버전문제 해결하자
+
+// 그림판 사이즈 문제 때문에 아이콘 배치를 변경했음.
+
 String imgPath = 'images/StudyDictation';
 
 class StudyDictation extends StatefulWidget {
@@ -71,6 +73,7 @@ class _StudyDictationState extends State<StudyDictation> {
     super.initState();
     //그림판 설정=============================================
     _controller = _newController();
+    // _finished = false;
   }
 
   //그림판을 위한 변수
@@ -87,13 +90,6 @@ class _StudyDictationState extends State<StudyDictation> {
 
   @override
   Widget build(BuildContext context) {
-    // List<Widget>actions = [
-    //   //지우기
-    //   new IconButton(
-    //       icon: new Icon(Icons.delete),
-    //       tooltip: 'Clear',
-    //       onPressed: _controller.clear),
-    // ];
 
     return problems.length == 0
         ? SafeArea(
@@ -121,47 +117,71 @@ class _StudyDictationState extends State<StudyDictation> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Center(child: Text('${problemIndex + 1}번 문제')),
-                  volumeIcon(),
 
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        passProblem()[0],
+                  Expanded(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          passProblem()[0],
 
-                        // 받아쓰는 곳
-                        SizedBox(
-                            height: 200,
-                            width: 400,
-                            child: Painter(_controller)),
-                        //FIXME: 임시로 만들어둔 버튼
-                        // Row(
-                        //   children: [
-                        //     RaisedButton(
-                        //       child: Text('정답'),
-                        //       onPressed: () {
-                        //         // ScaffoldMessenger.of(context)
-                        //         //     .showSnackBar(SnackBar(
-                        //         //   content: Text('정답'),
-                        //         // ));
-                        //       },
-                        //     ),
-                        //     RaisedButton(
-                        //       child: Text('오답'),
-                        //       onPressed: () {
-                        //         WrongProblemControllor().saveSqlite(
-                        //             stageIndex, problems[problemIndex]);
-                        //         // ScaffoldMessenger.of(context)
-                        //         //     .showSnackBar(SnackBar(
-                        //         //   content: Text(
-                        //         //       '오답 ${problems[problemIndex].problem} 문제'),
-                        //         // ));
-                        //       },
-                        //     )
-                        //   ],
-                        // ),
-                        //다음문제 가기 아이콘
-                        passProblem()[1],
-                      ]),
+
+                          // 받아쓰는 곳
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // 상단 부분
+                              Row(
+                                children: [
+                                  //지우개
+                                  delButton(),
+                                  //undo
+                                  undoButton(),
+                                  //TODO: 받아쓴 글자 대기열, 문제별로 대기열을 다르게 하자
+                                  //dictationQueue()
+                                  Text(dictationQueue[problemIndex]),
+
+                                  //확인 아이콘?
+                                  checkButton()
+                                ],
+                              ),
+                              //받아쓸 그림판
+                              paintDictation(),
+                            ],
+                          ),
+                          //FIXME: 임시로 만들어둔 버튼
+                          // Row(
+                          //   children: [
+                          //     RaisedButton(
+                          //       child: Text('정답'),
+                          //       onPressed: () {
+                          //         // ScaffoldMessenger.of(context)
+                          //         //     .showSnackBar(SnackBar(
+                          //         //   content: Text('정답'),
+                          //         // ));
+                          //       },
+                          //     ),
+                          //     RaisedButton(
+                          //       child: Text('오답'),
+                          //       onPressed: () {
+                          //         WrongProblemControllor().saveSqlite(
+                          //             stageIndex, problems[problemIndex]);
+                          //         // ScaffoldMessenger.of(context)
+                          //         //     .showSnackBar(SnackBar(
+                          //         //   content: Text(
+                          //         //       '오답 ${problems[problemIndex].problem} 문제'),
+                          //         // ));
+                          //       },
+                          //     )
+                          //   ],
+                          // ),
+                          //다음문제 가기 아이콘
+                          Column(children: [
+                            volumeIcon(),
+                            passProblem()[1],
+                          ])
+                        ]),
+                  ),
+
 
                   //나가기 버튼
                   Row(
@@ -190,7 +210,51 @@ class _StudyDictationState extends State<StudyDictation> {
                   : SizedBox(),
             ),
           );
+
   }
+
+//TODO: 아이콘 예쁘게 변경
+  Widget checkButton() => IconButton(
+        icon: Icon(Icons.check),
+        onPressed: () => savePng(_controller.finish()),
+      );
+
+//TODO: 이미지 저장해서 글자인식이랑 주고받기
+  int i = 0;
+  List<String> dictationQueue = [
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j'
+  ];
+  // List<Future> dictationQueue;
+  void savePng(PictureDetails picture) {
+    setState(() {
+      i++;
+      _controller = _newController();
+    });
+
+    dictationQueue[problemIndex] += '$i';
+    // dictationQueue[problemIndex] += picture.toPNG();
+
+  }
+
+  Widget paintDictation() => Expanded(
+      child: SizedBox(height: 50, width: 400, child: new Painter(_controller)));
+
+  Widget delButton() =>
+      IconButton(icon: Icon(Icons.delete), onPressed: _controller.clear);
+
+  Widget undoButton() => IconButton(
+        icon: Icon(Icons.undo),
+        onPressed: _controller.undo,
+      );
 
   Widget exitButton(context) => InkWell(
         child: Image.asset(
@@ -205,7 +269,7 @@ class _StudyDictationState extends State<StudyDictation> {
   Widget volumeIcon() => InkWell(
         child: Image.asset(
           '$imgPath/volume.png',
-          width: 150,
+          width: 100,
           height: 70,
         ),
         onTap: () {
@@ -224,7 +288,7 @@ class _StudyDictationState extends State<StudyDictation> {
                 onTap: () {
                   setState(() {
                     problemIndex--;
-
+                    _controller = _newController();
                     ttsSpeak(problems[problemIndex].problem);
                   });
                 },
@@ -243,7 +307,7 @@ class _StudyDictationState extends State<StudyDictation> {
                 onTap: () {
                   setState(() {
                     problemIndex++;
-
+                    _controller = _newController();
                     ttsSpeak(problems[problemIndex].problem);
                   });
                 },
