@@ -39,7 +39,6 @@ class _StudyDictationState extends State<StudyDictation> {
   int problemIndex = 0;
   int stageAllocationCount = 10; //각 스테이지에서 10개를 풀 수 있음
   List<ProblemModel> problems = [];
-  // bool _finished;
 
   @override
   void initState() {
@@ -91,6 +90,7 @@ class _StudyDictationState extends State<StudyDictation> {
 
   @override
   Widget build(BuildContext context) {
+
     return problems.length == 0
         ? SafeArea(
             child: Scaffold(
@@ -123,6 +123,7 @@ class _StudyDictationState extends State<StudyDictation> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           passProblem()[0],
+
 
                           // 받아쓰는 곳
                           Column(
@@ -181,6 +182,7 @@ class _StudyDictationState extends State<StudyDictation> {
                         ]),
                   ),
 
+
                   //나가기 버튼
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -208,6 +210,7 @@ class _StudyDictationState extends State<StudyDictation> {
                   : SizedBox(),
             ),
           );
+
   }
 
 //TODO: 아이콘 예쁘게 변경
@@ -239,6 +242,7 @@ class _StudyDictationState extends State<StudyDictation> {
 
     dictationQueue[problemIndex] += '$i';
     // dictationQueue[problemIndex] += picture.toPNG();
+
   }
 
   Widget paintDictation() => Expanded(
