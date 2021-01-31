@@ -1,6 +1,7 @@
 //맞춤법 심화 학습
 
 import 'package:flutter/material.dart';
+import 'package:learn_korean_for_children/model/OthographyModel.dart';
 
 // 맞춤법 문제가 음성으로 출제되고, 고르는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
@@ -13,6 +14,11 @@ class Orthography extends StatefulWidget {
 }
 
 class _OrthographyState extends State<Orthography> {
+  int stageIndex;
+  int problemIndex = 0;
+  int stageAllocationCount = 10;
+  List<OthographyModel> problems = [];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,15 +27,11 @@ class _OrthographyState extends State<Orthography> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            //볼륨조절 아이콘
-            VolumeIcon,
-
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //TODO: 첫 문제 이전으로 가기 비활성화, 마지막 문제 다음으로 가기 비활성화
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   //이전문제 가기 버튼
-                  // TODO: 문제가 없으면 버튼을 숨긴다.
-                  PassProblem[0],
+                  passProblem()[0],
 
                   //TODO: 맞춤법 양자택일 문제 출제
                   Column(
@@ -46,7 +48,7 @@ class _OrthographyState extends State<Orthography> {
                     ],
                   ),
                   //다음문제 가기 아이콘
-                  PassProblem[1],
+                  passProblem()[1],
                 ]),
 
             //나가기 버튼
@@ -59,6 +61,45 @@ class _OrthographyState extends State<Orthography> {
       ),
     );
   }
+
+  List<Widget> passProblem() => [
+        problemIndex != 0
+            ? InkWell(
+                child: Image.asset(
+                  '$imgPath/prev_problem.png',
+                  width: 200,
+                  height: 200,
+                ),
+                onTap: () {
+                  setState(() {
+                    problemIndex--;
+                  });
+                },
+              )
+            : SizedBox(
+                width: 200,
+                height: 200,
+              ),
+        problemIndex != problems.length - 1
+            ? InkWell(
+                child: Image.asset(
+                  '$imgPath/next_problem.png',
+                  width: 150,
+                  height: 150,
+                ),
+                onTap: () {
+                  setState(() {
+                    problemIndex++;
+                  });
+                },
+              )
+            : RaisedButton(
+                child: Text('StageClear!'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+      ];
 }
 
 Widget exitButton(context) => InkWell(
@@ -71,35 +112,7 @@ Widget exitButton(context) => InkWell(
         Navigator.pop(context);
       },
     );
-Widget VolumeIcon = InkWell(
-  child: Image.asset(
-    //TODO: 볼륨 아이콘 변경
-    '$imgPath/volume.png',
-    width: 150,
-    height: 70,
-  ),
-  onTap: () {}, //TODO: 나가기
-);
 
-// Widget PaintDictation = ; //TODO: 받아쓸 그림판
-List<Widget> PassProblem = [
-  InkWell(
-    child: Image.asset(
-      '$imgPath/prev_problem.png',
-      width: 200,
-      height: 200,
-    ),
-    onTap: () {}, //TODO: 이전 문제 불러오기
-  ),
-  InkWell(
-    child: Image.asset(
-      '$imgPath/next_problem.png',
-      width: 150,
-      height: 150,
-    ),
-    onTap: () {}, //TODO: 다음 문제 불러오기
-  ),
-];
 Widget Question = Image.asset(
   '$imgPath/sand.png',
   width: 100,
