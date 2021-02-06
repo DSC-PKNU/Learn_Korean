@@ -37,12 +37,12 @@ class _OrthographyState extends State<Orthography> {
                   Column(
                     children: [
                       //그림
-                      Question,
+                      question,
                       Row(
                         children: [
-                          SelectAns[0],
+                          selectAns()[0],
                           SizedBox(width: 100),
-                          SelectAns[1]
+                          selectAns()[1]
                         ],
                       ),
                     ],
@@ -100,31 +100,29 @@ class _OrthographyState extends State<Orthography> {
                 },
               ),
       ];
+
+  List<Widget> selectAns() => [
+        Text(
+          '모래',
+          style: TextStyle(fontSize: 30),
+        ),
+        Text(
+          '모레',
+          style: TextStyle(fontSize: 30),
+        )
+      ];
 }
 
 Widget exitButton(context) => InkWell(
-      child: Image.asset(
-        '$imgPath/exit_button.png',
-        width: 150,
-        height: 100,
-      ),
-      onTap: () {
-        Navigator.pop(context);
-      },
-    );
+    child: Image.asset(
+      '$imgPath/exit_button.png',
+      width: 150,
+      height: 100,
+    ),
+    onTap: () => Navigator.pop(context));
 
-Widget Question = Image.asset(
+Widget question = Image.asset(
   '$imgPath/sand.png',
   width: 100,
   height: 100,
 );
-List<Widget> SelectAns = [
-  Text(
-    '모래',
-    style: TextStyle(fontSize: 30),
-  ),
-  Text(
-    '모레',
-    style: TextStyle(fontSize: 30),
-  )
-];
