@@ -3,16 +3,17 @@ import 'StudyStagePage.dart';
 import 'parent_page.dart';
 import 'IncorrectProblem.dart';
 import 'Othography.dart';
+import 'kid_praise_page.dart';
 // 첫 시작 페이지 : 아이 계정
 
 String imgPath = 'images/KidPage';
 
 class KidPage extends StatefulWidget {
   @override
-  KidPage_State createState() => KidPage_State();
+  _KidPageState createState() => _KidPageState();
 }
 
-class KidPage_State extends State<KidPage> {
+class _KidPageState extends State<KidPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,7 +73,7 @@ List<Widget> kidPageCard = [
       Expanded(
         child: ReusableCard(
           text: 'praise',
-          cardChild: Text('칭찬판 페이지'),
+          cardChild: GetPraisePage(),
         ),
       ),
     ],
