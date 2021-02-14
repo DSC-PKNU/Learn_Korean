@@ -53,6 +53,18 @@ class _RegistProblemState extends State<RegistProblem> {
                           problemRegistControllor.deleteSqlite(problems[index]);
                           create();
                         },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.border_color),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) =>
+                                _dialog(true, modifyModel: problems[index]),
+                          ).whenComplete(() {
+                            create();
+                          });
+                        },
                       )
                     ],
                   ),
@@ -68,23 +80,11 @@ class _RegistProblemState extends State<RegistProblem> {
                       onPressed: () {
                         showDialog(
                           context: context,
-                          builder: (context) => _dialog(),
+                          builder: (context) => _dialog(false),
                         );
                       },
                       child: Text(
                         '등록',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: FlatButton(
-                      color: Colors.red[300],
-                      onPressed: () {
-                        //문제 삭제하는 함수
-                      },
-                      child: Text(
-                        '삭제',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -94,12 +94,14 @@ class _RegistProblemState extends State<RegistProblem> {
             )
           ],
         ),
-      ),);
+      ),
+    );
   }
 
-  Dialog _dialog() {
+  Dialog _dialog(bool mode, {ProblemModel modifyModel}) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    _problemTextFieldControllor.text = modifyModel.problem;
     return Dialog(
       child: ListView(
         shrinkWrap: true,
@@ -107,7 +109,7 @@ class _RegistProblemState extends State<RegistProblem> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '문제 등록',
+              mode == false ? '문제 등록' : '문제 수정',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -136,23 +138,36 @@ class _RegistProblemState extends State<RegistProblem> {
                   onPressed: () {
                     if (_problemTextFieldControllor.text != null &&
                         _problemTextFieldControllor.text != "") {
-                      problemRegistControllor
-                          .saveSqlite(ProblemModel(
-                              problem: _problemTextFieldControllor.text))
-                          .then((value) {
-                        if (value) {
-                          create();
-                          Navigator.pop(context);
-                        } else {
-                          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            // content: Text('중복된 문제가 있습니다.'),
-                          // ));
-                        }
-                      });
+                      if (mode == false) {
+                        problemRegistControllor
+                            .saveSqlite(ProblemModel(
+                                problem: _problemTextFieldControllor.text))
+                            .then((value) {
+                          if (value) {
+                            create();
+                            Navigator.pop(context);
+                          } else {
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text("중복된 문제가 있습니다.")));
+                          }
+                        });
+                      } else {
+                        problemRegistControllor
+                            .modifySqlite(
+                                modifyModel, _problemTextFieldControllor.text)
+                            .then((value) {
+                          if (value) {
+                            create();
+                            Navigator.pop(context);
+                          } else {
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text("중복된 문제가 있습니다.")));
+                          }
+                        });
+                      }
                     } else {
-                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        // content: Text('문제를 입력하세요!'),
-                      // ));
+                      Scaffold.of(context)
+                          .showSnackBar(SnackBar(content: Text("문제를 입력하세요.")));
                     }
                   },
                   child: Text(

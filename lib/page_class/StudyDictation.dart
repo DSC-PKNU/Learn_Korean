@@ -198,10 +198,9 @@ class _StudyDictationState extends State<StudyDictation> {
                       onPressed: () {
                         WrongProblemControllor()
                             .deleteSqlite(stageIndex, problems[problemIndex]);
-                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //   content: Text(
-                        //       '오답 ${problems[problemIndex].problem} 삭제 완료'),
-                        // ));
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                '오답 ${problems[problemIndex].problem} 삭제 완료')));
                       },
                       iconSize: 50,
                     )
