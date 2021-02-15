@@ -6,11 +6,12 @@ import 'package:learn_korean_for_children/library/tts.dart';
 import 'package:learn_korean_for_children/model/ProblemModel.dart';
 import 'package:painter/painter.dart';
 import 'package:tesseract_ocr/tesseract_ocr.dart';
-import 'dart:typed_data';
-
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as syspath;
+import 'dart:io';
 // 단어 문제가 음성으로 출제되고, 받아쓰는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
-//TODO: ScaffoldMessnger 버전문제 해결하자
+// TODO: ScaffoldMessnger 버전문제 해결하자
 
 // 그림판 사이즈 문제 때문에 아이콘 배치를 변경했음.
 
@@ -39,7 +40,6 @@ class _StudyDictationState extends State<StudyDictation> {
   int problemIndex = 0;
   int stageAllocationCount = 10; //각 스테이지에서 10개를 풀 수 있음
   List<ProblemModel> problems = [];
-  // bool _finished;
 
   @override
   void initState() {
@@ -229,15 +229,22 @@ class _StudyDictationState extends State<StudyDictation> {
     'i',
     'j'
   ];
+
   // List<Future> dictationQueue;
-  void savePng(PictureDetails picture) {
+  Future<void> savePng(PictureDetails picture) async {
+    final imageFile = picture.toImage();
+
+    final appDir = await syspath.getApplicationDocumentsDirectory();
+    final fileName = path.basename(imageFile.toString());
+    // final saveFile = await _storedImage.copy('${appDir.path}/$fileName');
+    final filePath = '${appDir.path}/$fileName';
     setState(() {
-      print(picture.toImage());
       _controller = _newController();
+
+      print(filePath);
     });
 
-    dictationQueue[problemIndex] += '$i';
-    // dictationQueue[problemIndex] += picture.toPNG();
+    // dictationQueue[problemIndex] += '$i';
   }
 
   Widget paintDictation() => Expanded(

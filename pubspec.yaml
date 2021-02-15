@@ -30,6 +30,8 @@ dependencies:
   painter: ^0.4.0
   tesseract_ocr: ^0.3.1
   gallery_saver: ^2.0.1
+  path_provider: ^1.6.27
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -34,39 +34,32 @@ class _RegistProblemState extends State<RegistProblem> {
       child: Scaffold(
         body: Column(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height - 69,
-              child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                  thickness: 3,
-                ),
-                itemCount: problems.length,
-                itemBuilder: (context, index) => Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  child: Row(
-                    children: [
-                      Text(problems[index].problem),
-                      Spacer(),
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          problemRegistControllor.deleteSqlite(problems[index]);
-                          create();
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.border_color),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) =>
-                                _dialog(true, modifyModel: problems[index]),
-                          ).whenComplete(() {
+
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height - 69,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                    thickness: 3,
+                  ),
+                  itemCount: problems.length,
+                  itemBuilder: (context, index) => Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    child: Row(
+                      children: [
+                        Text(problems[index].problem),
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            problemRegistControllor
+                                .deleteSqlite(problems[index]);
                             create();
-                          });
-                        },
-                      )
-                    ],
+                          },
+                        )
+                      ],
+                    ),
+
                   ),
                 ),
               ),
