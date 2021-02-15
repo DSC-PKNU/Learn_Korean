@@ -125,27 +125,29 @@ class _StudyDictationState extends State<StudyDictation> {
                           passProblem()[0],
 
                           // 받아쓰는 곳
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // 상단 부분
-                              Row(
-                                children: [
-                                  //지우개
-                                  delButton(),
-                                  //undo
-                                  undoButton(),
-                                  //TODO: 받아쓴 글자 대기열, 문제별로 대기열을 다르게 하자
-                                  //dictationQueue()
-                                  Text(dictationQueue[problemIndex]),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // 상단 부분
+                                Row(
+                                  children: [
+                                    //지우개
+                                    delButton(),
+                                    //undo
+                                    undoButton(),
+                                    //TODO: 받아쓴 글자 대기열, 문제별로 대기열을 다르게 하자
+                                    //dictationQueue()
+                                    Text(dictationQueue[problemIndex]),
 
-                                  //확인 아이콘?
-                                  checkButton()
-                                ],
-                              ),
-                              //받아쓸 그림판
-                              paintDictation(),
-                            ],
+                                    //확인 아이콘?
+                                    checkButton()
+                                  ],
+                                ),
+                                //받아쓸 그림판
+                                paintDictation(),
+                              ],
+                            ),
                           ),
                           //FIXME: 임시로 만들어둔 버튼
                           // Row(
