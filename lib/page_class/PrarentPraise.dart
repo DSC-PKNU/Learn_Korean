@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_korean_for_children/controllor/praise_register_controllor.dart';
 
 class ParentPraise extends StatefulWidget {
   @override
@@ -37,13 +38,13 @@ class _ParentPraiseState extends State<ParentPraise> {
                   SizedBox(
                     height: 10,
                   ),
-                  ReusableProduct(text: '1단계'),
-                  ReusableProduct(text: '2단계'),
-                  ReusableProduct(text: '3단계'),
-                  ReusableProduct(text: '4단계'),
-                  ReusableProduct(text: '5단계'),
-                  ReusableProduct(text: '6단계'),
-                  ReusableProduct(text: '7단계'),
+                  ReusableProduct(stage: 1),
+                  ReusableProduct(stage: 2),
+                  ReusableProduct(stage: 3),
+                  ReusableProduct(stage: 4),
+                  ReusableProduct(stage: 5),
+                  ReusableProduct(stage: 6),
+                  ReusableProduct(stage: 7),
                 ],
               ),
             ],
@@ -54,12 +55,38 @@ class _ParentPraiseState extends State<ParentPraise> {
   }
 }
 
-class ReusableProduct extends StatelessWidget {
-  ReusableProduct({this.text});
-  final String text;
+class ReusableProduct extends StatefulWidget {
+  ReusableProduct({this.stage}) {
+    praiseModel = PraiseModel(praise: '', stage: stage);
+  }
+  PraiseModel praiseModel;
+  final int stage;
 
   @override
-  Widget build(BuildContext context) {
+  _ReusableProductState createState() => _ReusableProductState();
+}
+
+class _ReusableProductState extends State<ReusableProduct> {
+  PraiseRegistControllor praiseRegistControllor = PraiseRegistControllor();
+
+  TextEditingController textEditingControllor = TextEditingController();
+
+  @override
+  void initState() {
+    praiseRegistControllor.loadSqlite().then((value) {
+      widget.praiseModel = value.firstWhere((element) {
+        return element.stage == widget.stage;
+      });
+
+      textEditingControllor.text = widget.praiseModel.praise;
+      setState(() {});
+    });
+
+    super.initState();
+  }
+
+  @override
+  build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -76,7 +103,7 @@ class ReusableProduct extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(25),
               child: Text(
-                '$text',
+                '${widget.stage}단계',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -92,16 +119,20 @@ class ReusableProduct extends StatelessWidget {
           height: 30,
           width: 400,
           child: TextField(
+            controller: textEditingControllor,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'input',
+              labelText: '',
             ),
           ),
         ),
         FlatButton(
-          onPressed: () {},
+          onPressed: () {
+            widget.praiseModel.praise = textEditingControllor.text;
+            praiseRegistControllor.saveSqlite(widget.praiseModel);
+          },
           color: Colors.blue[100],
-          child: Text('상품 관리'),
+          child: Text('등록/수정'),
         ),
         SizedBox(
           width: 15,

@@ -55,4 +55,16 @@ class ProblemRegistControllor {
     print(await db.rawDelete(
         'DELETE FROM problems_registered WHERE problem = "$primaryKey"'));
   }
+
+  Future<bool> modifySqlite(
+      ProblemModel problemModel, String newProblem) async {
+    Database db = await initDatabase();
+    String problem = problemModel.problem;
+    var queryResult = await db.rawQuery(
+        'SELECT * FROM problems_registered WHERE problem = "$problem"');
+
+    await db.update('problems_registered', {'problem': newProblem},
+        where: 'problem = ?', whereArgs: [problemModel.problem]);
+    return true;
+  }
 }

@@ -3,7 +3,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 FlutterTts flutterTts = FlutterTts();
 
 Future ttsSpeak(String str) async {
-  await ttsStop();
+  // await ttsStop();
   flutterTts.setLanguage("ko-KR");
   flutterTts.setPitch(0.75);
   flutterTts.setSpeechRate(0.35);
