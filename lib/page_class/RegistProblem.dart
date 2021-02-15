@@ -34,27 +34,30 @@ class _RegistProblemState extends State<RegistProblem> {
       child: Scaffold(
         body: Column(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height - 69,
-              child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                  thickness: 3,
-                ),
-                itemCount: problems.length,
-                itemBuilder: (context, index) => Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  child: Row(
-                    children: [
-                      Text(problems[index].problem),
-                      Spacer(),
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          problemRegistControllor.deleteSqlite(problems[index]);
-                          create();
-                        },
-                      )
-                    ],
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height - 69,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                    thickness: 3,
+                  ),
+                  itemCount: problems.length,
+                  itemBuilder: (context, index) => Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    child: Row(
+                      children: [
+                        Text(problems[index].problem),
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            problemRegistControllor
+                                .deleteSqlite(problems[index]);
+                            create();
+                          },
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -94,7 +97,8 @@ class _RegistProblemState extends State<RegistProblem> {
             )
           ],
         ),
-      ),);
+      ),
+    );
   }
 
   Dialog _dialog() {
@@ -145,13 +149,13 @@ class _RegistProblemState extends State<RegistProblem> {
                           Navigator.pop(context);
                         } else {
                           // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            // content: Text('중복된 문제가 있습니다.'),
+                          // content: Text('중복된 문제가 있습니다.'),
                           // ));
                         }
                       });
                     } else {
                       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        // content: Text('문제를 입력하세요!'),
+                      // content: Text('문제를 입력하세요!'),
                       // ));
                     }
                   },
