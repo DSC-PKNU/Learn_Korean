@@ -9,12 +9,8 @@ import 'package:tesseract_ocr/tesseract_ocr.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspath;
 import 'dart:io';
+
 // 단어 문제가 음성으로 출제되고, 받아쓰는 화면
-// TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
-// TODO: ScaffoldMessnger 버전문제 해결하자
-
-// 그림판 사이즈 문제 때문에 아이콘 배치를 변경했음.
-
 String imgPath = 'images/StudyDictation';
 
 class StudyDictation extends StatefulWidget {
@@ -83,7 +79,7 @@ class _StudyDictationState extends State<StudyDictation> {
   PainterController _newController() {
     PainterController controller = new PainterController();
     controller.thickness = 5.0;
-    controller.backgroundColor = Colors.grey[300];
+    controller.backgroundColor = Colors.transparent;
     return controller;
   }
 
@@ -111,111 +107,123 @@ class _StudyDictationState extends State<StudyDictation> {
             ),
           )
         : SafeArea(
-            child: Scaffold(
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Center(child: Text('${problemIndex + 1}번 문제')),
-
-                  Expanded(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          passProblem()[0],
-
-                          // 받아쓰는 곳
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Container(
+              decoration: dictationDeco(),
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      height: 100,
+                    ),
+                    Expanded(
+                      child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          // crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Column(
                               children: [
-                                // 상단 부분
-                                Row(
-                                  children: [
-                                    //지우개
-                                    delButton(),
-                                    //undo
-                                    undoButton(),
-                                    //TODO: 받아쓴 글자 대기열, 문제별로 대기열을 다르게 하자
-                                    //dictationQueue()
-                                    Text(dictationQueue[problemIndex]),
-
-                                    //확인 아이콘?
-                                    checkButton()
-                                  ],
+                                SizedBox(
+                                  height: 50,
+                                  width: 100,
+                                  child: Text('${problemIndex + 1}번 문제'),
                                 ),
-                                //받아쓸 그림판
-                                paintDictation(),
+                                passProblem()[0],
                               ],
                             ),
-                          ),
-                          //FIXME: 임시로 만들어둔 버튼
-                          // Row(
-                          //   children: [
-                          //     RaisedButton(
-                          //       child: Text('정답'),
-                          //       onPressed: () {
-                          //         // ScaffoldMessenger.of(context)
-                          //         //     .showSnackBar(SnackBar(
-                          //         //   content: Text('정답'),
-                          //         // ));
-                          //       },
-                          //     ),
-                          //     RaisedButton(
-                          //       child: Text('오답'),
-                          //       onPressed: () {
-                          //         WrongProblemControllor().saveSqlite(
-                          //             stageIndex, problems[problemIndex]);
-                          //         // ScaffoldMessenger.of(context)
-                          //         //     .showSnackBar(SnackBar(
-                          //         //   content: Text(
-                          //         //       '오답 ${problems[problemIndex].problem} 문제'),
-                          //         // ));
-                          //       },
-                          //     )
-                          //   ],
-                          // ),
-                          //다음문제 가기 아이콘
-                          Column(children: [
-                            volumeIcon(),
-                            passProblem()[1],
-                          ])
-                        ]),
-                  ),
+                            // 받아쓰는 곳
 
-                  //나가기 버튼
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      exitButton(context),
-                    ],
-                  )
-                ],
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.startTop,
-              floatingActionButton: wrongProblemMode
-                  ? IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        WrongProblemControllor()
-                            .deleteSqlite(stageIndex, problems[problemIndex]);
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                                '오답 ${problems[problemIndex].problem} 삭제 완료')));
-                      },
-                      iconSize: 50,
+                            Stack(alignment: Alignment.center, children: [
+                              Image.asset(
+                                "$imgPath/painter.png",
+                                width: 400,
+                                height: 400,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //dictationQueue()
+                                  Text(dictationQueue[problemIndex]),
+                                  //받아쓸 그림판
+                                  paintDictation(),
+                                ],
+                              ),
+                            ]),
+
+                            Column(
+                              children: [
+                                volumeIcon(),
+                                //다음문제 가기 아이콘
+                                passProblem()[1],
+                              ],
+                            ),
+                            //FIXME: 임시로 만들어둔 버튼
+                            // Row(
+                            //   children: [
+                            //     RaisedButton(
+                            //       child: Text('정답'),
+                            //       onPressed: () {
+                            //         // ScaffoldMessenger.of(context)
+                            //         //     .showSnackBar(SnackBar(
+                            //         //   content: Text('정답'),
+                            //         // ));
+                            //       },
+                            //     ),
+                            //     RaisedButton(
+                            //       child: Text('오답'),
+                            //       onPressed: () {
+                            //         WrongProblemControllor().saveSqlite(
+                            //             stageIndex, problems[problemIndex]);
+                            //         // ScaffoldMessenger.of(context)
+                            //         //     .showSnackBar(SnackBar(
+                            //         //   content: Text(
+                            //         //       '오답 ${problems[problemIndex].problem} 문제'),
+                            //         // ));
+                            //       },
+                            //     )
+                            //   ],
+                            // ),
+                          ]),
+                    ),
+
+                    //버튼
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          //지우개
+                          delButton(),
+                          //undo
+                          undoButton(),
+                          //확인 아이콘
+                          checkButton(),
+                          exitButton(context),
+                        ],
+                      ),
                     )
-                  : SizedBox(),
+                  ],
+                ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.startTop,
+                floatingActionButton: wrongProblemMode
+                    ? IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          WrongProblemControllor()
+                              .deleteSqlite(stageIndex, problems[problemIndex]);
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  '오답 ${problems[problemIndex].problem} 삭제 완료')));
+                        },
+                        iconSize: 50,
+                      )
+                    : SizedBox(),
+              ),
             ),
           );
   }
-
-//TODO: 아이콘 예쁘게 변경
-  Widget checkButton() => IconButton(
-        icon: Icon(Icons.check),
-        onPressed: () => savePng(_controller.finish()),
-      );
 
 //TODO: 이미지 저장해서 글자인식이랑 주고받기
   int i = 0;
@@ -236,35 +244,72 @@ class _StudyDictationState extends State<StudyDictation> {
   Future<void> savePng(PictureDetails picture) async {
     final imageFile = picture.toImage();
 
-    final appDir = await syspath.getApplicationDocumentsDirectory();
-    final fileName = path.basename(imageFile.toString());
-    // final saveFile = await _storedImage.copy('${appDir.path}/$fileName');
-    final filePath = '${appDir.path}/$fileName';
     setState(() {
       _controller = _newController();
-
-      print(filePath);
+      //1. picture를 이미지로 변환
+      //2. ocr로 텍스트로 변환
+      //3. dictationQueue에 저장
+      //4. dictationQueue를 채점
     });
 
     // dictationQueue[problemIndex] += '$i';
   }
 
+  BoxDecoration dictationDeco() => BoxDecoration(
+      color: Colors.white,
+      image: DecorationImage(
+        fit: BoxFit.fill,
+        image: AssetImage(
+          "$imgPath/background.png",
+        ),
+      ));
+
+  BoxDecoration paintDeco() => BoxDecoration(
+      color: Colors.white,
+      image: DecorationImage(
+        fit: BoxFit.fill,
+        image: AssetImage(
+          "$imgPath/painter.png",
+        ),
+      ));
+
   Widget paintDictation() => Expanded(
-      child: SizedBox(height: 50, width: 400, child: new Painter(_controller)));
+      child:
+          SizedBox(height: 700, width: 400, child: new Painter(_controller)));
 
-  Widget delButton() =>
-      IconButton(icon: Icon(Icons.delete), onPressed: _controller.clear);
+//TODO: 아이콘 예쁘게 변경
+  double iconWidth = 150;
+  double iconHeight = 150;
+  Widget checkButton() => InkWell(
+        child: Image.asset(
+          '$imgPath/check.png',
+          width: iconWidth,
+          height: iconHeight,
+        ),
+        onTap: () => savePng(_controller.finish()),
+      );
+  Widget delButton() => InkWell(
+      child: Image.asset(
+        '$imgPath/del.png',
+        width: iconWidth,
+        height: iconHeight,
+      ),
+      onTap: _controller.clear);
 
-  Widget undoButton() => IconButton(
-        icon: Icon(Icons.undo),
-        onPressed: _controller.undo,
+  Widget undoButton() => InkWell(
+        child: Image.asset(
+          '$imgPath/undo.png',
+          width: iconWidth,
+          height: iconHeight,
+        ),
+        onTap: _controller.undo,
       );
 
   Widget exitButton(context) => InkWell(
         child: Image.asset(
-          '$imgPath/exit_button.png',
-          width: 150,
-          height: 50,
+          '$imgPath/exit.png',
+          width: iconWidth,
+          height: iconHeight,
         ),
         onTap: () {
           Navigator.of(context).pop();
@@ -274,7 +319,7 @@ class _StudyDictationState extends State<StudyDictation> {
         child: Image.asset(
           '$imgPath/volume.png',
           width: 100,
-          height: 70,
+          height: 50,
         ),
         onTap: () {
           ttsSpeak(problems[problemIndex].problem);
@@ -285,7 +330,7 @@ class _StudyDictationState extends State<StudyDictation> {
         problemIndex != 0
             ? InkWell(
                 child: Image.asset(
-                  '$imgPath/prev_problem.png',
+                  '$imgPath/prev.png',
                   width: 200,
                   height: 200,
                 ),
@@ -304,9 +349,9 @@ class _StudyDictationState extends State<StudyDictation> {
         problemIndex != problems.length - 1
             ? InkWell(
                 child: Image.asset(
-                  '$imgPath/next_problem.png',
-                  width: 150,
-                  height: 150,
+                  '$imgPath/next.png',
+                  width: 200,
+                  height: 200,
                 ),
                 onTap: () {
                   setState(() {
