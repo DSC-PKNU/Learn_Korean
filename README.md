@@ -43,8 +43,41 @@
   </p>
 </p>
 
+<!-- ABOUT THE PROJECT -->
+## Learn_Korean
+PKNU DSC Flutter Application Project
+<br />
+<br />
+<!-- Member -->
+## Team Member
+차지원, 이형욱, 박나린, 박유상
+<br />
+<br />
+<!-- About The Project -->
+## About The Project
+글쓰기를 배우기 시작하는 아이들을 위한 받아쓰기 어플리케이션입니다.
+<br />
+<br />
+<!-- Build With -->
+### Built With
+ - [Flutter](https://www.flutter.dev)
+ - [tesseract_ocr](https://pub.dev/packages/tesseract_ocr)
+ - [Firebase](https://firebase.google.com/?hl=ko)
+
+### Getting Started
+ - git clone -> start Android Studio -> open Learn_Korean Project -> get dependecies -> run main.dart
+<br />
+<br />
+
+
+
+<!--
+<!-- GETTING STARTED -->
+<!--[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
+
 <!-- TABLE OF CONTENTS -->
-<details open="open">
+<!--<details open="open">
   <summary>Table of Contents</summary>
   <ol>
     <li>
@@ -68,51 +101,36 @@
   </ol>
 </details>
 
-<!-- ABOUT THE PROJECT -->
+<!--프로젝트 소개
 
-## About The Project
+<!--Here's why:
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-프로젝트 소개
-
-Here's why:
-
-- 이런이런 이유
-- 저런저런 이유
+<!-- - 이런이런 이유
+<!-- - 저런저런 이유
 - 요런요런 이유
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have have contributed to expanding this template!
+<!--Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have have contributed to expanding this template!
 
-A list of commonly used resources that I find helpful are listed in the acknowledgements.
+<!--A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
-### Built With
 
-플러터 사용, ocr은 ~~~
+<!--## Getting Started
 
-- [Flutter](https://getbootstrap.com)
-- [tesseract](https://jquery.com)
-- [asdf](https://laravel.com)
+<!--어떻게 실행시키나요
 
-<!-- GETTING STARTED -->
+<!--### Prerequisites
 
-## Getting Started
+<!--무엇을 install 해야할까요
 
-어떻게 실행시키나요
-
-### Prerequisites
-
-무엇을 install 해야할까요
-
-- npm
+<!--- npm
   ```sh
   npm install npm@latest -g
   ```
 
-### Installation
+<!--### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+<!--1. Get a free API Key at [https://example.com](https://example.com)
+<!--2. Clone the repo
    ```sh
    git clone https://github.com/DSC-PKNU/Learn_Korean.git
    ```
@@ -127,44 +145,43 @@ A list of commonly used resources that I find helpful are listed in the acknowle
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+<!--## Usage
 
-사용법을 적어봅시다
+<!--사용법을 적어봅시다
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+<!--_For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- ROADMAP -->
 
-## Roadmap
+<!--## Roadmap
 
-See the [open issues](https://github.com/DSC-PKNU/Learn_Korean/issues) for a list of proposed features (and known issues).
+<!--See the [open issues](https://github.com/DSC-PKNU/Learn_Korean/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 
-## Contributing
+<!--## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
+<!-- Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
+-->
 <!-- LICENSE -->
 
-## License
+<!--## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+<!-- Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- CONTACT -->
 
-## Contact
+<!--## Contact
 DSC PKNU
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+<!--Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+<!--Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 <!-- ACKNOWLEDGEMENTS -->
 
@@ -177,8 +194,8 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 <!-- https://github.com/DSC-PKNU/Learn_Korean.git -->
-[contributors-shield]: https://img.shields.io/github/contributors/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
-[contributors-url]: https://github.com/DSC-PKNU/Learn_Korean/graphs/contributors
+<!-- [contributors-shield]: https://img.shields.io/github/contributors/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
+<!-- [contributors-url]: https://github.com/DSC-PKNU/Learn_Korean/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
 [forks-url]: https://github.com/DSC-PKNU/Learn_Korean/network/members
 [stars-shield]: https://img.shields.io/github/stars/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
@@ -190,3 +207,4 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
+ -->
