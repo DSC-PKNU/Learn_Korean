@@ -14,7 +14,7 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-<!-- [![Contributors][contributors-shield]][contributors-url]
+[![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
@@ -71,7 +71,7 @@ PKNU DSC Flutter Application Project
 
 
 
-<!--
+
 <!-- GETTING STARTED -->
 <!--[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
@@ -192,10 +192,10 @@ DSC PKNU
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-<!-- https://github.com/DSC-PKNU/Learn_Korean.git -->
-<!-- [contributors-shield]: https://img.shields.io/github/contributors/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
-<!-- [contributors-url]: https://github.com/DSC-PKNU/Learn_Korean/graphs/contributors
+https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+https://github.com/DSC-PKNU/Learn_Korean.git -->
+[contributors-shield]: https://img.shields.io/github/contributors/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
+[contributors-url]: https://github.com/DSC-PKNU/Learn_Korean/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
 [forks-url]: https://github.com/DSC-PKNU/Learn_Korean/network/members
 [stars-shield]: https://img.shields.io/github/stars/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
