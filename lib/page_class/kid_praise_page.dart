@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_korean_for_children/controllor/praise_register_controllor.dart';
 
 String imgPath = "images/KidPraise";
 
@@ -15,7 +16,6 @@ class _GetPraisePageState extends State<GetPraisePage> {
       decoration: praiseBoxDecoration(),
       child: Scaffold(
           backgroundColor: Colors.transparent,
-          //TODO: 칭찬을 받을 때 마다 나무에 열매가 맺힌다. ,
           body: Container(
             child: PraiseSticker(),
           )),
@@ -34,24 +34,35 @@ class _GetPraisePageState extends State<GetPraisePage> {
 // 라운드 갯수만큼 열매 공간 마련
 // 획득한 열매만 표시
 class PraiseSticker extends StatelessWidget {
-  final int totalRound = 20;
+  final Future<List> praise = PraiseRegistControllor().loadSqlite();
 
-  // TODO: 데이터베이스 연결
-  // 단계 index 입력받기
-  void addSticker(List list, int startIndex, int endIndex) {
+  Dialog showPraise() => Dialog(
+        child: Text('획득한 상품'),
+      );
+
+  void addSticker(
+      List list, int startIndex, int endIndex, BuildContext context) {
     list.add(SizedBox(
       height: 30,
       width: 30,
     ));
-    for (int i = 1; i < 1 + endIndex; i++) {
+    for (int i = 1; i <= endIndex; i++) {
       list.add(InkWell(
-          onTap: () {}, //TODO : 칭찬스티커 탭하면 ?
+          onTap: () {
+            showDialog(context: context, builder: (context) => showPraise());
+          },
           child: Stack(children: [
-            Image.asset(
-              '$imgPath/sticker.png',
-              width: 40,
-              height: 40,
-            ),
+            //상품을 획득한 경우 스티커, 아니면 사이즈박스
+            PraiseRegistControllor().loadEachSqlite(i) != null
+                ? Image.asset(
+                    '$imgPath/sticker.png',
+                    width: 40,
+                    height: 40,
+                  )
+                : SizedBox(
+                    width: 40,
+                    height: 40,
+                  ),
             Text(
               '${startIndex + i}',
               style: TextStyle(
@@ -80,10 +91,10 @@ class PraiseSticker extends StatelessWidget {
     List<Widget> sticker3 = new List<Widget>();
     List<Widget> sticker4 = new List<Widget>();
 
-    addSticker(sticker1, 0, 4);
-    addSticker(sticker2, 5, 6);
-    addSticker(sticker3, 10, 6);
-    addSticker(sticker4, 15, 4);
+    addSticker(sticker1, 0, 4, context);
+    addSticker(sticker2, 5, 6, context);
+    addSticker(sticker3, 10, 6, context);
+    addSticker(sticker4, 16, 4, context);
 
     return Container(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [

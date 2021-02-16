@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'StudyStagePage.dart';
 import 'parent_page.dart';
 import 'IncorrectProblem.dart';
-import 'Othography.dart';
+import 'Orthography.dart';
 import 'kid_praise_page.dart';
 // 첫 시작 페이지 : 아이 계정
 
@@ -50,7 +50,7 @@ List<Widget> kidPageCard = [
         //맞춤법 공부
         Expanded(
           child: ReusableCard(
-            text: "othography",
+            text: "orthography",
             cardChild: Orthography(),
           ),
         ),

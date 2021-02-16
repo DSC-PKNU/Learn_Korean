@@ -1,12 +1,16 @@
 //맞춤법 심화 학습
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:learn_korean_for_children/model/OthographyModel.dart';
+import 'package:learn_korean_for_children/controllor/problem_orthography.dart';
+import 'package:learn_korean_for_children/data/orthographyData.dart';
+import 'package:learn_korean_for_children/model/OrthographyModel.dart';
 
 // 맞춤법 문제가 음성으로 출제되고, 고르는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
 // TODO: 맞춤법 선택한 답을 백엔드에 전달하기
-String imgPath = 'images/Othography';
+String imgPath = 'images/Orthography';
 
 class Orthography extends StatefulWidget {
   @override
@@ -14,10 +18,27 @@ class Orthography extends StatefulWidget {
 }
 
 class _OrthographyState extends State<Orthography> {
-  int stageIndex;
   int problemIndex = 0;
   int stageAllocationCount = 10;
-  List<OthographyModel> problems = [];
+  List<OrthographyModel> problems = [];
+  List<OrthographyModel> incorrectProblems = [];
+  List<List<String>> stageProblemList = [];
+
+  @override
+  void initState() {
+    //문제를 모두 불러온다.
+    for (int i = 1; i < 20; i++) {
+      stageProblemList.add(orthographyData[i]);
+    }
+    stageProblemList.shuffle(); //문제를 섞는다.
+
+    for (int i = 0; i < stageAllocationCount; i++) {
+      problems.add(OrthographyModel(problem: stageProblemList[i][0]));
+      incorrectProblems.add(OrthographyModel(problem: stageProblemList[i][1]));
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +55,21 @@ class _OrthographyState extends State<Orthography> {
                   passProblem()[0],
 
                   //TODO: 맞춤법 양자택일 문제 출제
-                  Column(
-                    children: [
-                      //그림
-                      question,
-                      Row(
-                        children: [
-                          selectAns()[0],
-                          SizedBox(width: 100),
-                          selectAns()[1]
-                        ],
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      children: [
+                        //그림
+                        question,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            selectAns()[0],
+                            SizedBox(width: 100),
+                            selectAns()[1]
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   //다음문제 가기 아이콘
                   passProblem()[1],
@@ -103,12 +127,12 @@ class _OrthographyState extends State<Orthography> {
 
   List<Widget> selectAns() => [
         Text(
-          '모래',
-          style: TextStyle(fontSize: 30),
+          problems[problemIndex].problem,
+          style: TextStyle(fontSize: 20),
         ),
         Text(
-          '모레',
-          style: TextStyle(fontSize: 30),
+          incorrectProblems[problemIndex].problem,
+          style: TextStyle(fontSize: 20),
         )
       ];
 }
