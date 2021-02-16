@@ -43,31 +43,34 @@
   </p>
 </p>
 
+
+
+<!-- 여기 이거 나중에 가운데로 옮겨주세용 -->
 <!-- TABLE OF CONTENTS -->
-<!--<details open="open">
+<details open="open">
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#Learn_Korean">About The Project</a>
+      <a href="#Learn_Korean">Learn_Korean</a>
     </li>
+    <br />
     <li>
-    <li>
-      <a href="#Team Member">About The Project</a>
+      <a href="#Team Member">Team Member</a>
     </li>
+    <br />
     <li>
-      <a href="#About The Project">Getting Started</a>
+      <a href="#About The Project">About The Project</a>
       <ul>
-        <li><a href="#Build Width">Prerequisites</a></li>
-        <li><a href="#Getting Started">Installation</a></li>
+        <li><a href="#Build Width">Build Width</a></li>
+        <li><a href="#Getting Started">Getting Started</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
+
+
+
+<br />
 
 
 <!-- ABOUT THE PROJECT -->
