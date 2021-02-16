@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_korean_for_children/controllor/problem_orthography.dart';
 import 'package:learn_korean_for_children/data/orthographyData.dart';
 import 'package:learn_korean_for_children/model/OrthographyModel.dart';
+import 'package:learn_korean_for_children/page_class/IncorrectProblem.dart';
 
 // 맞춤법 문제가 음성으로 출제되고, 고르는 화면
 // TODO: 문제풀이 중단 버튼 => 풀다가 종료될 때 버그가 있을까?
@@ -51,28 +52,23 @@ class _OrthographyState extends State<Orthography> {
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  //이전문제 가기 버튼
-                  passProblem()[0],
-
-                  //TODO: 맞춤법 양자택일 문제 출제
                   Expanded(
                     child: Column(
                       children: [
                         //그림
+                        Text('${problemIndex + 1}번 문제'),
                         question,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             selectAns()[0],
-                            SizedBox(width: 100),
+                            SizedBox(width: 60),
                             selectAns()[1]
                           ],
                         ),
                       ],
                     ),
                   ),
-                  //다음문제 가기 아이콘
-                  passProblem()[1],
                 ]),
 
             //나가기 버튼
@@ -126,14 +122,80 @@ class _OrthographyState extends State<Orthography> {
       ];
 
   List<Widget> selectAns() => [
-        Text(
-          problems[problemIndex].problem,
-          style: TextStyle(fontSize: 20),
+        Material(
+          color: Colors.blueGrey,
+          borderRadius: BorderRadius.circular(300),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(300),
+            onTap: () {
+              setState(() {
+                problemIndex++;
+              });
+            }, //TODO: 채점
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: Stack(children: [
+                Text(
+                  '\n    ' + problems[problemIndex].problem,
+                  style: TextStyle(
+                    fontSize: 20,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 1
+                      ..color = Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  '\n    ' + problems[problemIndex].problem,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ]),
+            ),
+          ),
         ),
-        Text(
-          incorrectProblems[problemIndex].problem,
-          style: TextStyle(fontSize: 20),
-        )
+        Material(
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(300),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(300),
+            onTap: () {
+              setState(() {
+                problemIndex++;
+              });
+            }, //TODO: 채점
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: Stack(children: [
+                Text(
+                  '\n    ' + incorrectProblems[problemIndex].problem,
+                  style: TextStyle(
+                    fontSize: 20,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 1
+                      ..color = Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  '\n    ' + incorrectProblems[problemIndex].problem,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ]),
+            ),
+          ),
+        ),
       ];
 }
 
