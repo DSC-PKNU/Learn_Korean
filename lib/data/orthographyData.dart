@@ -1,4 +1,4 @@
-var othographyData = {
+var orthographyData = {
   1: ['금세', '금새'],
   2: ['모래', '모레'],
   3: ['며칠', '몇일'],

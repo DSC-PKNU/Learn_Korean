@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:learn_korean_for_children/controllor/problem_regist_controllor.dart';
 import 'package:learn_korean_for_children/model/ProblemModel.dart';
 
-//TODO: ScaffoldMessenger 버전이 이상한가보다 나중에 조율하자
 class RegistProblem extends StatefulWidget {
   @override
   _RegistProblemState createState() => _RegistProblemState();
@@ -34,7 +33,6 @@ class _RegistProblemState extends State<RegistProblem> {
       child: Scaffold(
         body: Column(
           children: [
-
             Expanded(
               child: Container(
                 height: MediaQuery.of(context).size.height - 69,
@@ -59,7 +57,6 @@ class _RegistProblemState extends State<RegistProblem> {
                         )
                       ],
                     ),
-
                   ),
                 ),
               ),
