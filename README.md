@@ -43,6 +43,33 @@
   </p>
 </p>
 
+<!-- TABLE OF CONTENTS -->
+<!--<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#Learn_Korean">About The Project</a>
+    </li>
+    <li>
+    <li>
+      <a href="#Team Member">About The Project</a>
+    </li>
+    <li>
+      <a href="#About The Project">Getting Started</a>
+      <ul>
+        <li><a href="#Build Width">Prerequisites</a></li>
+        <li><a href="#Getting Started">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
+
+
 <!-- ABOUT THE PROJECT -->
 ## Learn_Korean
 PKNU DSC Flutter Application Project
@@ -59,7 +86,7 @@ PKNU DSC Flutter Application Project
 <br />
 <br />
 <!-- Build With -->
-### Built With
+### Build With
  - [Flutter](https://www.flutter.dev)
  - [tesseract_ocr](https://pub.dev/packages/tesseract_ocr)
  - [Firebase](https://firebase.google.com/?hl=ko)
@@ -192,8 +219,8 @@ DSC PKNU
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-https://github.com/DSC-PKNU/Learn_Korean.git -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+<!-- https://github.com/DSC-PKNU/Learn_Korean.git -->
 [contributors-shield]: https://img.shields.io/github/contributors/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
 [contributors-url]: https://github.com/DSC-PKNU/Learn_Korean/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/DSC-PKNU/Learn_Korean.svg?style=for-the-badge
@@ -207,4 +234,3 @@ https://github.com/DSC-PKNU/Learn_Korean.git -->
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
- -->
