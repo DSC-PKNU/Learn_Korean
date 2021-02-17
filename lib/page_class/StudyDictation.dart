@@ -5,10 +5,7 @@ import 'package:learn_korean_for_children/data/problemData.dart';
 import 'package:learn_korean_for_children/library/tts.dart';
 import 'package:learn_korean_for_children/model/ProblemModel.dart';
 import 'package:painter/painter.dart';
-import 'package:tesseract_ocr/tesseract_ocr.dart';
-import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart' as syspath;
-import 'dart:io';
+import 'package:collection/collection.dart';
 
 // 단어 문제가 음성으로 출제되고, 받아쓰는 화면
 String imgPath = 'images/StudyDictation';
@@ -35,6 +32,7 @@ class _StudyDictationState extends State<StudyDictation> {
   int stageIndex;
   int problemIndex = 0;
   int stageAllocationCount = 10; //각 스테이지에서 10개를 풀 수 있음
+  int score = 10;
   List<ProblemModel> problems = [];
 
   @override
@@ -70,7 +68,6 @@ class _StudyDictationState extends State<StudyDictation> {
     super.initState();
     //그림판 설정=============================================
     _controller = _newController();
-    // _finished = false;
   }
 
   //그림판을 위한 변수
@@ -194,34 +191,21 @@ class _StudyDictationState extends State<StudyDictation> {
           );
   }
 
-//TODO: 이미지 저장해서 글자인식이랑 주고받기
   int i = 0;
-  List<String> dictationQueue = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j'
-  ];
-
+  List<String> dictationQueue = ['', '', '', '', '', '', '', '', '', ''];
+  String ocr(PictureDetails picture) => ('a'); //TODO: ocr 기능 구현
   // List<Future> dictationQueue;
   Future<void> savePng(PictureDetails picture) async {
     final imageFile = picture.toImage();
+    Function eq = const ListEquality().equals;
 
     setState(() {
       _controller = _newController();
-      //1. picture를 이미지로 변환
-      //2. ocr로 텍스트로 변환
-      //3. dictationQueue에 저장
-      //4. dictationQueue를 채점
+      dictationQueue[problemIndex] += ocr(picture);
+      problems[problemIndex].isRightAnswer =
+          eq(dictationQueue[problemIndex], problems[problemIndex].problem);
+      // dictationQueue[problemIndex] += '$i';
     });
-
-    // dictationQueue[problemIndex] += '$i';
   }
 
   BoxDecoration dictationDeco() => BoxDecoration(
@@ -246,7 +230,6 @@ class _StudyDictationState extends State<StudyDictation> {
       child:
           SizedBox(height: 700, width: 400, child: new Painter(_controller)));
 
-//TODO: 아이콘 예쁘게 변경
   double iconWidth = 150;
   double iconHeight = 70;
   Widget checkButton() => InkWell(
@@ -313,7 +296,7 @@ class _StudyDictationState extends State<StudyDictation> {
               )
             : SizedBox(
                 width: 150,
-                height: 200,
+                height: 100,
               ),
         problemIndex != problems.length - 1
             ? InkWell(
@@ -330,9 +313,23 @@ class _StudyDictationState extends State<StudyDictation> {
                   });
                 },
               )
-            : RaisedButton(
-                child: Text('StageClear!'),
-                onPressed: () {
+            : InkWell(
+                child: Image.asset(
+                  '$imgPath/next_round.png',
+                  width: 150,
+                  height: 100,
+                ),
+                onTap: () {
+                  int i = 0;
+                  while (i < stageAllocationCount) {
+                    if (!problems[problemIndex].isRightAnswer) {
+                      WrongProblemControllor()
+                          .saveSqlite(stageIndex, problems[problemIndex]);
+                      score--;
+                    }
+
+                    i++;
+                  }
                   Navigator.pop(context);
                 },
               ),

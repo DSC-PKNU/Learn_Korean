@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:learn_korean_for_children/controllor/wrong_problem_controllor.dart';
 import 'package:learn_korean_for_children/data/problemData.dart';
+import 'package:learn_korean_for_children/model/ProblemModel.dart';
 import 'package:learn_korean_for_children/page_class/StudyDictation.dart';
 
 String imgPath = 'images/StudyStagePage';
+
 //TODO: 충돌을 수정한 부분에서 문제가 없는지 확인하자.
 // 단어 공부 페이지
 class StudyStagePage extends StatefulWidget {
@@ -118,31 +121,46 @@ class _StudyStagePageState extends State<StudyStagePage> {
   }
 }
 
-class ReusableCard extends StatelessWidget {
+class ReusableCard extends StatefulWidget {
   ReusableCard({
     this.cardChild,
     this.round,
-    //TODO: SQLite 저장
   });
-  //TODO: 문제 저장 클래스, 점수 저장 클래스와 연동시켜야 한다.
 
-  final Widget cardChild; //눌렀을 때 전환될 페이지 TODO: 널 페이지 반환 해결하기
-  final dynamic round; //현재 몇단계인지, TODO: 반복문으로 해결해보자
-  final int starScore = 1;
+  final Widget cardChild; //눌렀을 때 전환될 페이지
+  final dynamic round;
+  @override
+  _ReusableCardState createState() => _ReusableCardState();
+}
+
+class _ReusableCardState extends State<ReusableCard> {
+  int starScore = 1;
+
+  List<ProblemModel> problems = [];
+
+  @override
+  void initState() {
+    if (!(widget.round is String))
+      WrongProblemControllor()
+        ..loadSqlite(widget.round).then((value) => problems = value);
+
+    int wrongScore = problems.length;
+    if (wrongScore < 1)
+      starScore = 3;
+    else if (wrongScore < 5)
+      starScore = 2;
+    else if (wrongScore < 8)
+      starScore = 1;
+    else
+      starScore = 0;
+  }
 
   void addStar(List list) {
     for (int i = 0; i < starScore; i++)
       list.add(
         Icon(
           Icons.star,
-          color: Colors.yellow,
-        ),
-      );
-    for (int i = starScore; i < 3; i++)
-      list.add(
-        Icon(
-          Icons.star,
-          color: Colors.blueGrey,
+          color: (i < starScore) ? Colors.yellow : Colors.blueGrey,
         ),
       );
   }
@@ -157,14 +175,16 @@ class ReusableCard extends StatelessWidget {
               height: 80,
             ),
             Text(
-              round is String ? '\n\t$round' : '\n    \t$round단계',
+              widget.round is String
+                  ? '\n\t${widget.round}'
+                  : '\n    \t${widget.round}단계',
               style: TextStyle(fontSize: 20.0),
             ),
           ],
         ),
         onTap: () => Navigator.push(context,
                 MaterialPageRoute<void>(builder: (BuildContext context) {
-              return cardChild;
+              return widget.cardChild;
             })));
   }
 
