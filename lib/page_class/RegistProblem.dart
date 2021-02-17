@@ -48,6 +48,16 @@ class _RegistProblemState extends State<RegistProblem> {
                         Text(problems[index].problem),
                         Spacer(),
                         IconButton(
+                          icon: Icon(Icons.border_color),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  _dialog(true, modifyModel: problems[index]),
+                            );
+                          },
+                        ),
+                        IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () {
                             problemRegistControllor
@@ -91,7 +101,8 @@ class _RegistProblemState extends State<RegistProblem> {
   Dialog _dialog(bool mode, {ProblemModel modifyModel}) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    _problemTextFieldControllor.text = modifyModel.problem;
+    if (modifyModel != null)
+      _problemTextFieldControllor.text = modifyModel.problem;
     return Dialog(
       child: ListView(
         shrinkWrap: true,
