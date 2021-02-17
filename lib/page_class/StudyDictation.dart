@@ -112,21 +112,18 @@ class _StudyDictationState extends State<StudyDictation> {
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 body: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 100,
-                    ),
                     Expanded(
                       child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          // crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
                             Column(
                               children: [
                                 SizedBox(
-                                  height: 50,
+                                  height: 150,
                                   width: 100,
                                   child: Text('${problemIndex + 1}번 문제'),
                                 ),
@@ -139,7 +136,7 @@ class _StudyDictationState extends State<StudyDictation> {
                               Image.asset(
                                 "$imgPath/painter.png",
                                 width: 400,
-                                height: 400,
+                                height: 700,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,49 +156,21 @@ class _StudyDictationState extends State<StudyDictation> {
                                 passProblem()[1],
                               ],
                             ),
-                            //FIXME: 임시로 만들어둔 버튼
-                            // Row(
-                            //   children: [
-                            //     RaisedButton(
-                            //       child: Text('정답'),
-                            //       onPressed: () {
-                            //         // ScaffoldMessenger.of(context)
-                            //         //     .showSnackBar(SnackBar(
-                            //         //   content: Text('정답'),
-                            //         // ));
-                            //       },
-                            //     ),
-                            //     RaisedButton(
-                            //       child: Text('오답'),
-                            //       onPressed: () {
-                            //         WrongProblemControllor().saveSqlite(
-                            //             stageIndex, problems[problemIndex]);
-                            //         // ScaffoldMessenger.of(context)
-                            //         //     .showSnackBar(SnackBar(
-                            //         //   content: Text(
-                            //         //       '오답 ${problems[problemIndex].problem} 문제'),
-                            //         // ));
-                            //       },
-                            //     )
-                            //   ],
-                            // ),
                           ]),
                     ),
 
                     //버튼
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          //지우개
-                          delButton(),
-                          //undo
-                          undoButton(),
-                          //확인 아이콘
-                          checkButton(),
-                          exitButton(context),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        //지우개
+                        delButton(),
+                        //undo
+                        undoButton(),
+                        //확인 아이콘
+                        checkButton(),
+                        exitButton(context),
+                      ],
                     )
                   ],
                 ),
@@ -279,7 +248,7 @@ class _StudyDictationState extends State<StudyDictation> {
 
 //TODO: 아이콘 예쁘게 변경
   double iconWidth = 150;
-  double iconHeight = 150;
+  double iconHeight = 70;
   Widget checkButton() => InkWell(
         child: Image.asset(
           '$imgPath/check.png',
@@ -318,8 +287,8 @@ class _StudyDictationState extends State<StudyDictation> {
   Widget volumeIcon() => InkWell(
         child: Image.asset(
           '$imgPath/volume.png',
-          width: 100,
-          height: 50,
+          width: 150,
+          height: 150,
         ),
         onTap: () {
           ttsSpeak(problems[problemIndex].problem);
@@ -331,8 +300,8 @@ class _StudyDictationState extends State<StudyDictation> {
             ? InkWell(
                 child: Image.asset(
                   '$imgPath/prev.png',
-                  width: 200,
-                  height: 200,
+                  width: 150,
+                  height: 100,
                 ),
                 onTap: () {
                   setState(() {
@@ -343,15 +312,15 @@ class _StudyDictationState extends State<StudyDictation> {
                 },
               )
             : SizedBox(
-                width: 200,
+                width: 150,
                 height: 200,
               ),
         problemIndex != problems.length - 1
             ? InkWell(
                 child: Image.asset(
                   '$imgPath/next.png',
-                  width: 200,
-                  height: 200,
+                  width: 150,
+                  height: 100,
                 ),
                 onTap: () {
                   setState(() {
