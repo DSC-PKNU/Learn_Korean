@@ -38,7 +38,6 @@ class _StudyDictationState extends State<StudyDictation> {
   _StudyDictationState(this.stageIndex, this.wrongProblemMode);
 
   final bool wrongProblemMode;
-  var globalKey = new GlobalKey(); //위젯 스크린샷을 위한 key
   int stageIndex; //스테이지 번호
   int problemIndex = 0; //문제 번호
   int stageAllocationCount = 10; //각 스테이지에서 10개를 풀 수 있음
@@ -170,18 +169,14 @@ class _StudyDictationState extends State<StudyDictation> {
                                 width: 400,
                                 height: 700,
                               ),
-                              // 그림판 캡쳐
-                              RepaintBoundary(
-                                key: globalKey,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        '\n\n\n' + dictationQueue[problemIndex],
-                                        style: TextStyle(fontSize: 20)),
-                                    paintDictation(),
-                                  ],
-                                ),
+                              // 그림판
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('\n\n\n' + dictationQueue[problemIndex],
+                                      style: TextStyle(fontSize: 20)),
+                                  paintDictation(),
+                                ],
                               ),
                             ]),
                             Column(
@@ -229,20 +224,12 @@ class _StudyDictationState extends State<StudyDictation> {
 
   //폴더에 이미지 저장
   void savePicture(PictureDetails picture) async {
-    print("START CAPTURE");
-    // var renderObject = globalKey.currentContext.findRenderObject();
-    // if (renderObject is RenderRepaintBoundary)
-    {
-      // var boundary = renderObject;
-      ui.Image image = await picture.toImage();
-      final directory = (await getApplicationDocumentsDirectory()).path;
-      ByteData byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List pngBytes = byteData.buffer.asUint8List();
-      imgFile = new File('$directory/screenshot1.png');
-      imgFile.writeAsBytes(pngBytes);
-      print("FINISH CAPTURE ${imgFile.path}");
-    }
+    ui.Image image = await picture.toImage();
+    final directory = (await getApplicationDocumentsDirectory()).path;
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    imgFile = new File('$directory/screenshot1.png');
+    imgFile.writeAsBytes(pngBytes);
   }
 
   Future<void> savePng(PictureDetails picture) async {
