@@ -35,7 +35,7 @@
     <a href="https://github.com/DSC-PKNU/Learn_Korean"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="hhttps://github.com/DSC-PKNU/Learn_Korean">View Demo</a>
+    <a href="https://github.com/DSC-PKNU/Learn_Korean">View Demo</a>
     ·
     <a href="https://github.com/DSC-PKNU/Learn_Korean">Report Bug</a>
     ·
