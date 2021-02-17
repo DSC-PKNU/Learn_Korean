@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:learn_korean_for_children/controllor/problem_regist_controllor.dart';
 import 'package:learn_korean_for_children/controllor/wrong_problem_controllor.dart';
 import 'package:learn_korean_for_children/data/problemData.dart';
@@ -6,6 +9,12 @@ import 'package:learn_korean_for_children/library/tts.dart';
 import 'package:learn_korean_for_children/model/ProblemModel.dart';
 import 'package:painter/painter.dart';
 import 'package:collection/collection.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:ui' as ui;
+import 'package:tesseract_ocr/tesseract_ocr.dart';
 
 // 단어 문제가 음성으로 출제되고, 받아쓰는 화면
 String imgPath = 'images/StudyDictation';
@@ -135,14 +144,17 @@ class _StudyDictationState extends State<StudyDictation> {
                                 width: 400,
                                 height: 700,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //dictationQueue()
-                                  Text(dictationQueue[problemIndex]),
-                                  //받아쓸 그림판
-                                  paintDictation(),
-                                ],
+                              RepaintBoundary(
+                                key: globalKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    //dictationQueue()
+                                    Text(dictationQueue[problemIndex]),
+                                    //받아쓸 그림판
+                                    paintDictation(),
+                                  ],
+                                ),
                               ),
                             ]),
 
@@ -191,19 +203,70 @@ class _StudyDictationState extends State<StudyDictation> {
           );
   }
 
+  var globalKey = new GlobalKey();
+
+  File imgFile;
+
+  void _capture() async {
+    print("START CAPTURE");
+    var renderObject = globalKey.currentContext.findRenderObject();
+    if (renderObject is RenderRepaintBoundary) {
+      var boundary = renderObject;
+      ui.Image image = await boundary.toImage();
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      ByteData byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List pngBytes = byteData.buffer.asUint8List();
+      print(pngBytes);
+      imgFile = new File('$directory/screenshot1.png');
+      imgFile.writeAsBytes(pngBytes);
+      print("FINISH CAPTURE ${imgFile.path}");
+      print(imgFile);
+    }
+  }
+
   int i = 0;
   List<String> dictationQueue = ['', '', '', '', '', '', '', '', '', ''];
   String ocr(PictureDetails picture) => ('a'); //TODO: ocr 기능 구현
   // List<Future> dictationQueue;
+
+  String extractText;
+  File pickedImage;
+  var tempStore;
+  Future readText() async {
+    tempStore = await ImagePicker.pickImage(source: ImageSource.gallery);
+    pickedImage = tempStore;
+
+    FirebaseVisionImage myImage = FirebaseVisionImage.fromFile(pickedImage);
+    TextRecognizer recognizeText = FirebaseVision.instance.textRecognizer();
+    VisionText readText = await recognizeText.processImage(myImage);
+
+    print(readText.text);
+  }
+
   Future<void> savePng(PictureDetails picture) async {
     final imageFile = picture.toImage();
-    Function eq = const ListEquality().equals;
+    _capture();
 
-    setState(() {
+    // FirebaseVisionImage myImage = await FirebaseVisionImage.fromFilePath(imgFile.path);
+    // TextRecognizer recognizeText = FirebaseVision.instance.textRecognizer();
+    // VisionText readText = await recognizeText.processImage(myImage);
+
+    // extractText = await TesseractOcr.extractText(imgFile.path,language: 'kor');
+
+    // print(readText.text);
+    // print('1');
+    // print(extractText);
+    //
+    // print('2');
+    // print(readText.text);
+
+    Function eq = const ListEquality().equals;
+    // readText();
+    setState((){
       _controller = _newController();
-      dictationQueue[problemIndex] += ocr(picture);
-      problems[problemIndex].isRightAnswer =
-          eq(dictationQueue[problemIndex], problems[problemIndex].problem);
+      // problems[problemIndex].isRightAnswer =
+      //     eq(dictationQueue[problemIndex], problems[problemIndex].problem);
       // dictationQueue[problemIndex] += '$i';
     });
   }
@@ -238,7 +301,13 @@ class _StudyDictationState extends State<StudyDictation> {
           width: iconWidth,
           height: iconHeight,
         ),
-        onTap: () => savePng(_controller.finish()),
+        onTap: () async{
+          savePng(_controller.finish());
+          extractText =
+              await TesseractOcr.extractText(imgFile.path, language: 'kor');
+          dictationQueue[problemIndex] += extractText;
+          print(dictationQueue[problemIndex]);
+        },
       );
   Widget delButton() => InkWell(
       child: Image.asset(
