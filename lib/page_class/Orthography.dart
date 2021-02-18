@@ -1,5 +1,6 @@
 //맞춤법 심화 학습
 
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -101,14 +102,12 @@ class _OrthographyState extends State<Orthography> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                //TODO: 이전 문제
                                 passProblem()[0],
                                 //문제 칠판
                                 Stack(
                                   children: [
                                     Column(
                                       children: [
-                                        //TODO: 문제 이미지
                                         question(),
                                         //양자 택일 체크
                                         Row(
@@ -124,7 +123,6 @@ class _OrthographyState extends State<Orthography> {
                                     ),
                                   ],
                                 ),
-                                //TODO: 다음 문제
                                 passProblem()[1],
                               ],
                             ),
@@ -222,6 +220,7 @@ class _OrthographyState extends State<Orthography> {
               rand = Random().nextInt(2);
               rightButton[problemIndex] = 'right.png';
               wrongButton[problemIndex] = 'ans.png';
+              sleep(const Duration(seconds: 1));
               problemIndex++;
               //정답 처리
             });
@@ -246,7 +245,7 @@ class _OrthographyState extends State<Orthography> {
               rand = new Random().nextInt(2);
               rightButton[problemIndex] = 'ans.png';
               wrongButton[problemIndex] = 'wrong.png';
-              print(problemIndex);
+              sleep(const Duration(seconds: 1));
               problemIndex++;
               //오답처리
             });
