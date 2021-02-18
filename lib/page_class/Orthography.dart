@@ -212,63 +212,77 @@ class _OrthographyState extends State<Orthography> {
                 },
               ),
       ];
-
+  bool pointer_absorb = false;
   List<Widget> selectAns() => [
         // 문제 출제
-        InkWell(
-          onTap: () {
-            setState(() {
-              rightButton[problemIndex] = 'right.png';
-              wrongButton[problemIndex] = 'ans.png';
-              //정답 처리
-            });
-              Future.delayed(Duration(seconds:2),(){
-                setState(() {
-                  problemIndex++;
-                });
-                rand = new Random().nextInt(2);
-            });
-          },
-          child: SizedBox(
-            width: 200,
-            height: 100,
-            child: Stack(alignment: Alignment.center, children: [
-              Image(
-                image: AssetImage('$imgPath/${rightButton[problemIndex]}'),
-              ),
-              Text(
-                problems[problemIndex].problem,
-                style: TextStyle(fontSize: 25),
-              ),
-            ]),
+        AbsorbPointer(
+          absorbing: pointer_absorb,
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                rightButton[problemIndex] = 'right.png';
+                wrongButton[problemIndex] = 'ans.png';
+                pointer_absorb = true;
+                //정답 처리
+              });
+                Future.delayed(Duration(seconds:2),(){
+                  setState(() {
+                    if(problemIndex < stageAllocationCount-1){
+                      problemIndex++;
+                      pointer_absorb = false;
+                    }
+                  });
+                  rand = new Random().nextInt(2);
+              });
+            },
+            child: SizedBox(
+              width: 200,
+              height: 100,
+              child: Stack(alignment: Alignment.center, children: [
+                Image(
+                  image: AssetImage('$imgPath/${rightButton[problemIndex]}'),
+                ),
+                Text(
+                  problems[problemIndex].problem,
+                  style: TextStyle(fontSize: 25),
+                ),
+              ]),
+            ),
           ),
         ),
-        InkWell(
-          onTap: () {
-            setState(() {
-              rightButton[problemIndex] = 'ans.png';
-              wrongButton[problemIndex] = 'wrong.png';
-              //오답처리
-            });
-            Future.delayed(Duration(seconds: 2),(){
+        AbsorbPointer(
+          absorbing: pointer_absorb,
+          child: InkWell(
+            onTap: () {
               setState(() {
-                problemIndex++;
+                rightButton[problemIndex] = 'ans.png';
+                wrongButton[problemIndex] = 'wrong.png';
+                pointer_absorb = true;
+                //오답처리
               });
-              rand = new Random().nextInt(2);
-            });
-          },
-          child: SizedBox(
-            width: 200,
-            height: 100,
-            child: Stack(alignment: Alignment.center, children: [
-              Image(
-                image: AssetImage('$imgPath/${wrongButton[problemIndex]}'),
-              ),
-              Text(
-                incorrectProblems[problemIndex].problem,
-                style: TextStyle(fontSize: 25),
-              ),
-            ]),
+              Future.delayed(Duration(seconds: 2),(){
+                setState(() {
+                  if(problemIndex < stageAllocationCount-1){
+                    problemIndex++;
+                    pointer_absorb = false;
+                  }
+                });
+                rand = new Random().nextInt(2);
+              });
+            },
+            child: SizedBox(
+              width: 200,
+              height: 100,
+              child: Stack(alignment: Alignment.center, children: [
+                Image(
+                  image: AssetImage('$imgPath/${wrongButton[problemIndex]}'),
+                ),
+                Text(
+                  incorrectProblems[problemIndex].problem,
+                  style: TextStyle(fontSize: 25),
+                ),
+              ]),
+            ),
           ),
         ),
       ];
