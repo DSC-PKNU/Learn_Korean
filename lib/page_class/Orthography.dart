@@ -1,5 +1,6 @@
 //맞춤법 심화 학습
 
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
@@ -217,12 +218,15 @@ class _OrthographyState extends State<Orthography> {
         InkWell(
           onTap: () {
             setState(() {
-              rand = Random().nextInt(2);
               rightButton[problemIndex] = 'right.png';
               wrongButton[problemIndex] = 'ans.png';
-              sleep(const Duration(seconds: 1));
-              problemIndex++;
               //정답 처리
+            });
+              Future.delayed(Duration(seconds:2),(){
+                setState(() {
+                  problemIndex++;
+                });
+                rand = new Random().nextInt(2);
             });
           },
           child: SizedBox(
@@ -242,12 +246,15 @@ class _OrthographyState extends State<Orthography> {
         InkWell(
           onTap: () {
             setState(() {
-              rand = new Random().nextInt(2);
               rightButton[problemIndex] = 'ans.png';
               wrongButton[problemIndex] = 'wrong.png';
-              sleep(const Duration(seconds: 1));
-              problemIndex++;
               //오답처리
+            });
+            Future.delayed(Duration(seconds: 2),(){
+              setState(() {
+                problemIndex++;
+              });
+              rand = new Random().nextInt(2);
             });
           },
           child: SizedBox(
