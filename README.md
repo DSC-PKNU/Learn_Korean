@@ -93,7 +93,7 @@ PKNU DSC Flutter Application Project
 ### Build With
  - [Flutter](https://www.flutter.dev)
  - [tesseract_ocr](https://pub.dev/packages/tesseract_ocr)
- - [Firebase](https://firebase.google.com/?hl=ko)
+ - [SQLite](https://www.sqlite.org)
 
 ### Getting Started
  - git clone -> start Android Studio -> open Learn_Korean Project -> get dependecies -> run main.dart
