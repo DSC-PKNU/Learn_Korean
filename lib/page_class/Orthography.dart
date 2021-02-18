@@ -20,6 +20,32 @@ class _OrthographyState extends State<Orthography> {
   int problemIndex = 0; //문제 번호
   int stageAllocationCount = 10; //총 문제 수
   int rand = Random().nextInt(2); //문제를 섞기 위한 난수
+  List<String> rightButton = [
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+  ]; //왼쪽 선택지에 나타날 이미지
+  List<String> wrongButton = [
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+    'ans.png',
+  ]; //오른쪽 선택지에 나타날 이미지
   List<OrthographyModel> problems = []; //양자택일 정답 리스트
   List<OrthographyModel> incorrectProblems = []; //양자택일 오답 리스트
   List<List<String>> stageProblemList = []; //sqlite에서 얻어온 문제 리스트
@@ -73,9 +99,10 @@ class _OrthographyState extends State<Orthography> {
                               height: 300,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 //TODO: 이전 문제
+                                passProblem()[0],
                                 //문제 칠판
                                 Stack(
                                   children: [
@@ -98,6 +125,7 @@ class _OrthographyState extends State<Orthography> {
                                   ],
                                 ),
                                 //TODO: 다음 문제
+                                passProblem()[1],
                               ],
                             ),
                           ]),
@@ -151,9 +179,9 @@ class _OrthographyState extends State<Orthography> {
         problemIndex != 0
             ? InkWell(
                 child: Image.asset(
-                  '$imgPath/prev_problem.png',
-                  width: 200,
-                  height: 200,
+                  '$imgPath/prev.png',
+                  width: 120,
+                  height: 120,
                 ),
                 onTap: () {
                   setState(() {
@@ -162,15 +190,15 @@ class _OrthographyState extends State<Orthography> {
                 },
               )
             : SizedBox(
-                width: 200,
-                height: 200,
+                width: 120,
+                height: 120,
               ),
         problemIndex != problems.length - 1
             ? InkWell(
                 child: Image.asset(
-                  '$imgPath/next_problem.png',
-                  width: 150,
-                  height: 150,
+                  '$imgPath/next.png',
+                  width: 120,
+                  height: 120,
                 ),
                 onTap: () {
                   setState(() {
@@ -192,8 +220,10 @@ class _OrthographyState extends State<Orthography> {
           onTap: () {
             setState(() {
               rand = Random().nextInt(2);
+              rightButton[problemIndex] = 'right.png';
+              wrongButton[problemIndex] = 'ans.png';
               problemIndex++;
-              //TODO: 정답처리
+              //정답 처리
             });
           },
           child: SizedBox(
@@ -201,7 +231,7 @@ class _OrthographyState extends State<Orthography> {
             height: 100,
             child: Stack(alignment: Alignment.center, children: [
               Image(
-                image: AssetImage('$imgPath/ans.png'),
+                image: AssetImage('$imgPath/${rightButton[problemIndex]}'),
               ),
               Text(
                 problems[problemIndex].problem,
@@ -214,9 +244,11 @@ class _OrthographyState extends State<Orthography> {
           onTap: () {
             setState(() {
               rand = new Random().nextInt(2);
-              print(rand);
+              rightButton[problemIndex] = 'ans.png';
+              wrongButton[problemIndex] = 'wrong.png';
+              print(problemIndex);
               problemIndex++;
-              //TODO: 오답처리
+              //오답처리
             });
           },
           child: SizedBox(
@@ -224,7 +256,7 @@ class _OrthographyState extends State<Orthography> {
             height: 100,
             child: Stack(alignment: Alignment.center, children: [
               Image(
-                image: AssetImage('$imgPath/ans.png'),
+                image: AssetImage('$imgPath/${wrongButton[problemIndex]}'),
               ),
               Text(
                 incorrectProblems[problemIndex].problem,
@@ -235,7 +267,7 @@ class _OrthographyState extends State<Orthography> {
         ),
       ];
   Widget question() => Image.asset(
-        '$imgPath/sand.png',
+        '$imgPath/problems/${problems[problemIndex].problem}.png',
         width: 100,
         height: 100,
       );
