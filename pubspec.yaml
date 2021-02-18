@@ -60,6 +60,7 @@ flutter:
     - images/ParentPage/
     - images/StudyDictation/
     - images/Orthography/
+    - images/Orthography/problems/
     - images/IncorrectProblem/
     - images/ParentPraise/
     - images/KidPraise/
