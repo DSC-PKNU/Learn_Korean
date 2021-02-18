@@ -40,6 +40,15 @@ class PraiseSticker extends StatelessWidget {
         child: Text('획득한 상품'),
       );
 
+  Widget backPage(BuildContext context) {
+    return InkWell(
+        child: Image.asset('images/IncorrectProblem/back_page_blue.png',
+            width: 120, height: 120),
+        onTap: () {
+          Navigator.pop(context);
+        });
+  }
+
   void addSticker(
       List list, int startIndex, int endIndex, BuildContext context) {
     list.add(SizedBox(
@@ -92,39 +101,60 @@ class PraiseSticker extends StatelessWidget {
     List<Widget> sticker4 = new List<Widget>();
 
     addSticker(sticker1, 0, 4, context);
-    addSticker(sticker2, 5, 6, context);
+    addSticker(sticker2, 4, 6, context);
     addSticker(sticker3, 10, 6, context);
     addSticker(sticker4, 16, 4, context);
 
     return Container(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: sticker1),
-        SizedBox(
-          width: 20,
-          height: 20,
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: sticker2),
-        SizedBox(
-          width: 20,
-          height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: sticker3,
-        ),
-        SizedBox(
-          width: 20,
-          height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: sticker4,
-        ),
-        SizedBox(
-          width: 45,
-          height: 45,
-        ),
-      ]),
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              backPage(context),
+              SizedBox(
+                height: 200,
+              )
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: sticker1,
+              ),
+              SizedBox(
+                width: 20,
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: sticker2,
+              ),
+              SizedBox(
+                width: 20,
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: sticker3,
+              ),
+              SizedBox(
+                width: 20,
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: sticker4,
+              ),
+              SizedBox(
+                width: 45,
+                height: 45,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
