@@ -149,14 +149,7 @@ class _StudyDictationState extends State<StudyDictation> {
                             Column(
                               children: [
                                 //문제번호
-                                SizedBox(
-                                  height: 150,
-                                  width: 100,
-                                  child: Text(
-                                    '\n\n${problemIndex + 1}번 문제',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
+                                problemNum(),
                                 //이전 문제로 가기
                                 passProblem()[0],
                               ],
@@ -164,17 +157,11 @@ class _StudyDictationState extends State<StudyDictation> {
 
                             // 그림판 스택(배경, 대기열, 그림판)
                             Stack(alignment: Alignment.center, children: [
-                              Image.asset(
-                                "$imgPath/painter.png",
-                                width: 400,
-                                height: 700,
-                              ),
-                              // 그림판
+                              background(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('\n\n\n' + dictationQueue[problemIndex],
-                                      style: TextStyle(fontSize: 20)),
+                                  dictQueueText(),
                                   paintDictation(),
                                 ],
                               ),
@@ -269,7 +256,21 @@ class _StudyDictationState extends State<StudyDictation> {
           "$imgPath/painter.png",
         ),
       ));
-
+  Widget dictQueueText() => Text('\n\n\n' + dictationQueue[problemIndex],
+      style: TextStyle(fontSize: 20));
+  Widget background() => Image.asset(
+        "$imgPath/painter.png",
+        width: 400,
+        height: 700,
+      );
+  Widget problemNum() => SizedBox(
+        height: 150,
+        width: 100,
+        child: Text(
+          '\n\n${problemIndex + 1}번 문제',
+          style: TextStyle(fontSize: 20),
+        ),
+      );
   Widget paintDictation() => Expanded(
       child:
           SizedBox(height: 700, width: 400, child: new Painter(_controller)));
