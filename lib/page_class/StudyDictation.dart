@@ -38,11 +38,21 @@ class _StudyDictationState extends State<StudyDictation> {
   _StudyDictationState(this.stageIndex, this.wrongProblemMode);
 
   final bool wrongProblemMode;
-  int stageIndex;
-  int problemIndex = 0;
+  int stageIndex; //스테이지 번호
+  int problemIndex = 0; //문제 번호
   int stageAllocationCount = 10; //각 스테이지에서 10개를 풀 수 있음
-  int score = 10;
+  int score = 10; //받아쓰기 점수
+  double iconWidth = 150; //하단 버튼 너비
+  double iconHeight = 70; //하단 버튼 높이
+  String extractText; //OCR 변환 후 텍스트
+
+  File imgFile; //저장할 받아쓰기 이미지
+  File pickedImage; //저장한 받아쓰기 이미지
+
+  //문제, 정답여부를 저장한 모델
   List<ProblemModel> problems = [];
+  // 받아쓰기 대기열, 받아쓴 후 확인을 누를 때마다 한 글자씩 추가된다.
+  List<String> dictationQueue = ['', '', '', '', '', '', '', '', '', ''];
 
   @override
   void initState() {
@@ -56,6 +66,7 @@ class _StudyDictationState extends State<StudyDictation> {
           });
         });
     } else {
+      // 커스텀 문제
       if (stageIndex == 0) {
         ProblemRegistControllor()
           ..loadSqlite().then((value) {
@@ -65,31 +76,31 @@ class _StudyDictationState extends State<StudyDictation> {
             });
           });
       } else {
+        // 단계별 문제
         List<String> stageProblemList = problemData[stageIndex];
         stageProblemList.shuffle(); //문제를 섞는다.
 
-        for (int i = 0; i < stageAllocationCount; i++) {
+        for (int i = 0; i < stageAllocationCount; i++)
           problems.add(ProblemModel(problem: stageProblemList[i]));
-        }
+
         ttsSpeak(problems[problemIndex].problem);
       }
     }
     super.initState();
-    //그림판 설정=============================================
+    //그림판 초기화
     _controller = _newController();
   }
 
-  //그림판을 위한 변수
+  //그림판 선언
   PainterController _controller;
 
+  //그림판 초기화 함수
   PainterController _newController() {
     PainterController controller = new PainterController();
     controller.thickness = 5.0;
     controller.backgroundColor = Colors.transparent;
     return controller;
   }
-
-  //그림판=================================
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +125,15 @@ class _StudyDictationState extends State<StudyDictation> {
           )
         : SafeArea(
             child: Container(
+              /* 
+                      col     col     col
+              Row (  문제번호    그     다시듣기     
+              .      이전문제    림     다음문제 )
+
+              Row (  아이콘  아이콘  아이콘  아이콘 )
+              
+              */
+              //배경 이미지
               decoration: dictationDeco(),
               child: Scaffold(
                 backgroundColor: Colors.transparent,
@@ -128,38 +148,27 @@ class _StudyDictationState extends State<StudyDictation> {
                           children: <Widget>[
                             Column(
                               children: [
-                                SizedBox(
-                                  height: 150,
-                                  width: 100,
-                                  child: Text('${problemIndex + 1}번 문제'),
-                                ),
+                                //문제번호
+                                problemNum(),
+                                //이전 문제로 가기
                                 passProblem()[0],
                               ],
                             ),
-                            // 받아쓰는 곳
 
+                            // 그림판 스택(배경, 대기열, 그림판)
                             Stack(alignment: Alignment.center, children: [
-                              Image.asset(
-                                "$imgPath/painter.png",
-                                width: 400,
-                                height: 700,
-                              ),
-                              RepaintBoundary(
-                                key: globalKey,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    //dictationQueue()
-                                    Text(dictationQueue[problemIndex]),
-                                    //받아쓸 그림판
-                                    paintDictation(),
-                                  ],
-                                ),
+                              background(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  dictQueueText(),
+                                  paintDictation(),
+                                ],
                               ),
                             ]),
-
                             Column(
                               children: [
+                                //다시 듣기 아이콘
                                 volumeIcon(),
                                 //다음문제 가기 아이콘
                                 passProblem()[1],
@@ -172,11 +181,8 @@ class _StudyDictationState extends State<StudyDictation> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        //지우개
                         delButton(),
-                        //undo
                         undoButton(),
-                        //확인 아이콘
                         checkButton(),
                         exitButton(context),
                       ],
@@ -203,71 +209,33 @@ class _StudyDictationState extends State<StudyDictation> {
           );
   }
 
-  var globalKey = new GlobalKey();
-
-  File imgFile;
-
-  void _capture() async {
-    print("START CAPTURE");
-    var renderObject = globalKey.currentContext.findRenderObject();
-    if (renderObject is RenderRepaintBoundary) {
-      var boundary = renderObject;
-      ui.Image image = await boundary.toImage();
-      final directory = (await getApplicationDocumentsDirectory()).path;
-      ByteData byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List pngBytes = byteData.buffer.asUint8List();
-      print(pngBytes);
-      imgFile = new File('$directory/screenshot1.png');
-      imgFile.writeAsBytes(pngBytes);
-      print("FINISH CAPTURE ${imgFile.path}");
-      print(imgFile);
-    }
-  }
-
-  int i = 0;
-  List<String> dictationQueue = ['', '', '', '', '', '', '', '', '', ''];
-  String ocr(PictureDetails picture) => ('a'); //TODO: ocr 기능 구현
-  // List<Future> dictationQueue;
-
-  String extractText;
-  File pickedImage;
-  var tempStore;
-  Future readText() async {
-    tempStore = await ImagePicker.pickImage(source: ImageSource.gallery);
-    pickedImage = tempStore;
-
-    FirebaseVisionImage myImage = FirebaseVisionImage.fromFile(pickedImage);
-    TextRecognizer recognizeText = FirebaseVision.instance.textRecognizer();
-    VisionText readText = await recognizeText.processImage(myImage);
-
-    print(readText.text);
+  //폴더에 이미지 저장
+  void savePicture(PictureDetails picture) async {
+    ui.Image image = await picture.toImage();
+    final directory = (await getApplicationDocumentsDirectory()).path;
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    imgFile = new File('$directory/screenshot1.png');
+    imgFile.writeAsBytes(pngBytes);
   }
 
   Future<void> savePng(PictureDetails picture) async {
-    final imageFile = picture.toImage();
-    _capture();
+    //이미지 저장
+    savePicture(picture);
+    //OCR 인식
+    extractText = await TesseractOcr.extractText(imgFile.path, language: 'kor');
 
-    // FirebaseVisionImage myImage = await FirebaseVisionImage.fromFilePath(imgFile.path);
-    // TextRecognizer recognizeText = FirebaseVision.instance.textRecognizer();
-    // VisionText readText = await recognizeText.processImage(myImage);
-
-    // extractText = await TesseractOcr.extractText(imgFile.path,language: 'kor');
-
-    // print(readText.text);
-    // print('1');
-    // print(extractText);
-    //
-    // print('2');
-    // print(readText.text);
-
-    Function eq = const ListEquality().equals;
-    // readText();
-    setState((){
+    setState(() {
+      // 받아쓰기 대기열에 추가
+      dictationQueue[problemIndex] += extractText;
+      print(dictationQueue[problemIndex]);
+      // 그림판 초기화
       _controller = _newController();
-      // problems[problemIndex].isRightAnswer =
-      //     eq(dictationQueue[problemIndex], problems[problemIndex].problem);
-      // dictationQueue[problemIndex] += '$i';
+
+      // 채점하기
+      problems[problemIndex].isRightAnswer = (dictationQueue[problemIndex]
+              .compareTo(problems[problemIndex].problem) ==
+          0);
     });
   }
 
@@ -288,24 +256,34 @@ class _StudyDictationState extends State<StudyDictation> {
           "$imgPath/painter.png",
         ),
       ));
-
+  Widget dictQueueText() => Text('\n\n\n' + dictationQueue[problemIndex],
+      style: TextStyle(fontSize: 20));
+  Widget background() => Image.asset(
+        "$imgPath/painter.png",
+        width: 400,
+        height: 700,
+      );
+  Widget problemNum() => SizedBox(
+        height: 150,
+        width: 100,
+        child: Text(
+          '\n\n${problemIndex + 1}번 문제',
+          style: TextStyle(fontSize: 20),
+        ),
+      );
   Widget paintDictation() => Expanded(
       child:
           SizedBox(height: 700, width: 400, child: new Painter(_controller)));
 
-  double iconWidth = 150;
-  double iconHeight = 70;
   Widget checkButton() => InkWell(
         child: Image.asset(
           '$imgPath/check.png',
           width: iconWidth,
           height: iconHeight,
         ),
-        onTap: () async{
+        onTap: () async {
           savePng(_controller.finish());
-          extractText =
-              await TesseractOcr.extractText(imgFile.path, language: 'kor');
-          dictationQueue[problemIndex] += extractText;
+
           print(dictationQueue[problemIndex]);
         },
       );
