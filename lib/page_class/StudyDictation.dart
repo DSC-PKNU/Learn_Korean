@@ -221,7 +221,7 @@ class _StudyDictationState extends State<StudyDictation> {
 
   Future<void> savePng(PictureDetails picture) async {
     //이미지 저장
-    savePicture(picture);
+    await savePicture(picture);
     //OCR 인식
     extractText = await TesseractOcr.extractText(imgFile.path, language: 'kor');
 

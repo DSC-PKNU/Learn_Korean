@@ -6,7 +6,7 @@ Future ttsSpeak(String str) async {
   // await ttsStop();
   flutterTts.setLanguage("ko-KR");
   flutterTts.setPitch(0.75);
-  flutterTts.setSpeechRate(0.35);
+  flutterTts.setSpeechRate(0.75);
   await flutterTts.speak(str);
 }
 
