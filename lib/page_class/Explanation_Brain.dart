@@ -1,28 +1,30 @@
 import 'ExplanationStory.dart';
 
+const String imagePath = "images/Explanation";
+
 class ExplanationBrain {
   int _ExplanationNumber = 0;
   List<ExplanationStory> _storyData = [
     ExplanationStory(
-        ExplanationTitle: '첫번째 설명',
+        explainImgPath: '$imagePath/story1.png',
         choice1: '마지막 설명으로 이동',
         choice2: '두번째 설명으로 이동'),
     ExplanationStory(
-        ExplanationTitle: '두번째 설명',
+        explainImgPath: '$imagePath/story2.png',
         choice1: '첫번째 설명으로 이동',
         choice2: '세번째 설명으로 이동'),
     ExplanationStory(
-        ExplanationTitle: '세번째 설명',
+        explainImgPath: '$imagePath/story3.png',
         choice1: '두번째 설명으로 이동',
         choice2: '네번째 설명으로 이동'),
     ExplanationStory(
-        ExplanationTitle: '네번째 설명',
+        explainImgPath: '$imagePath/story4.png',
         choice1: '세번째 설명으로 이동',
         choice2: '첫번째 설명으로 이동'),
   ];
 
   String getStory() {
-    return _storyData[_ExplanationNumber].ExplanationTitle;
+    return _storyData[_ExplanationNumber].explainImgPath;
   }
 
   String getChoice1() {
